@@ -1,0 +1,16 @@
+.vs/
+.vscode/
+*.suo
+*.user
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.pdb
+*.idb
+*.log
+*.bin
+ipch/
+Release/
+Debug/
+x64/
+x86/
