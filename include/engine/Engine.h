@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "PrimitiveRenderer.h"
 
 using namespace sf;
 using namespace std;
@@ -9,6 +10,7 @@ using namespace std;
 class Engine {
 private:
 	RenderWindow window;
+	PrimitiveRenderer* primitive;
 
 	void handleEvent();
 	void renderScene();

@@ -1,6 +1,7 @@
 #include <Engine.h>
 #include <SFML/Graphics.hpp>
 
+
 int main() {
 	Engine engine(800, 600, "2DGameEngine", sf::Style::Close | sf::Style::Resize);
 	engine.setFramesPerSecond(60);
