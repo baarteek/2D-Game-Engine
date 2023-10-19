@@ -12,6 +12,8 @@ using namespace std;
 class Engine {
 private:
 	RenderWindow window;
+	Clock clock;
+	Time deltaTime;
 	TileMap* map;
 	Player* player;
 	Color backgroundColor;
@@ -19,6 +21,7 @@ private:
 	void handleEvent();
 	void renderScene();
 	void initMap(string mapPath);
+	void initPlayer(TileMap* tileMap);
 public:
 	Engine(unsigned int width, unsigned int height, string title, int style);
 	void run();

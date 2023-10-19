@@ -5,9 +5,7 @@ Engine::Engine(unsigned int width, unsigned int height, string title, int style)
 	window.create(VideoMode(width, height), title, style);
 	setBackgroundColor(47, 145, 250);
 	initMap("assets/maps/first_map.txt");
-	
-	player = new Player();
-	player->setPosition(50, 50);
+	initPlayer(map);
 }
 
 void Engine::initMap(string mapPath)
@@ -16,7 +14,18 @@ void Engine::initMap(string mapPath)
 	if (FileReader::readMapFile(mapPath, levelData)) {
 		map = new TileMap();
 		map->load("assets/tilemap.png", sf::Vector2u(18, 18), levelData);
+		map->setGravity(200);
 	}
+}
+
+void Engine::initPlayer(TileMap* tileMap)
+{
+	player = new Player();
+	player->setPosition(50, 50);
+	player->setTileMap(tileMap);
+	player->setVelocity(Vector2f(0, 150));
+	player->setJumpStrenght(100);
+	player->setPlayerSpeed(150);
 }
 
 void Engine::run()
@@ -36,16 +45,19 @@ void Engine::handleEvent()
 		case Event::Closed:
 			window.close();
 			break;
+
 		}
 	}
 }
 
 void Engine::renderScene()
 {
+	deltaTime = clock.restart();
 	window.clear(backgroundColor);
 
 	window.draw(*map);
 	window.draw(*player);
+	player->update(deltaTime.asSeconds());
 
 	window.display();
 }

@@ -50,6 +50,31 @@ bool TileMap::load(const string& tileset, sf::Vector2u tileSize, const vector<ve
         }
     }
 
+    this->tiles = tiles;
+
     return true;
+}
+
+const vector<vector<int>>& TileMap::getTiles() const
+{
+    return tiles;
+}
+
+int TileMap::getTileValue(unsigned int x, unsigned int y) const
+{
+    if (x < tiles[0].size() && y < tiles.size()) {
+        return tiles[y][x];
+    }
+    return -1;
+}
+
+void TileMap::setGravity(float gravity)
+{
+    this->gravity = gravity;
+}
+
+float TileMap::getGravity()
+{
+    return gravity;
 }
 
