@@ -16,6 +16,7 @@ private:
 
 	void handleEvent();
 	void renderScene();
+	void initMap(string mapPath);
 public:
 	Engine(unsigned int width, unsigned int height, string title, int style);
 	void run();
