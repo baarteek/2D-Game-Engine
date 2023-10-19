@@ -2,7 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "PrimitiveRenderer.h"
+
+#include "TileMap.h"
 
 using namespace sf;
 using namespace std;
@@ -10,7 +11,8 @@ using namespace std;
 class Engine {
 private:
 	RenderWindow window;
-	PrimitiveRenderer* primitive;
+	TileMap* map;
+	Color backgroundColor;
 
 	void handleEvent();
 	void renderScene();
@@ -20,4 +22,5 @@ public:
 	void setFramesPerSecond(unsigned int fps);
 	void setVerticalSync(bool enable);
 	void handleError(string& message);
+	void setBackgroundColor(int red, int green, int blue);
 };
