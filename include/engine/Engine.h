@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "TileMap.h"
+#include "Player.h"
 
 using namespace sf;
 using namespace std;
@@ -12,6 +13,7 @@ class Engine {
 private:
 	RenderWindow window;
 	TileMap* map;
+	Player* player;
 	Color backgroundColor;
 
 	void handleEvent();

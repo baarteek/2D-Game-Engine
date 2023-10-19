@@ -5,6 +5,9 @@ Engine::Engine(unsigned int width, unsigned int height, string title, int style)
 	window.create(VideoMode(width, height), title, style);
 	setBackgroundColor(47, 145, 250);
 	initMap("assets/maps/first_map.txt");
+	
+	player = new Player();
+	player->setPosition(50, 50);
 }
 
 void Engine::initMap(string mapPath)
@@ -42,6 +45,7 @@ void Engine::renderScene()
 	window.clear(backgroundColor);
 
 	window.draw(*map);
+	window.draw(*player);
 
 	window.display();
 }
