@@ -23,6 +23,7 @@ private:
 	float jumpStrength;
 	Clock animationClock;
 	Time frameDuration = seconds(0.1f);
+	int direction = 1;
 
 	virtual void draw(RenderTarget& target, RenderStates states) const;
 

@@ -1,9 +1,20 @@
 #include "Player.h"
 
-void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void Player::draw(RenderTarget& target, RenderStates states) const
 {
-	states.transform *= getTransform();
-	target.draw(*playerSprite, states);
+    FloatRect bounds = playerSprite->getLocalBounds();
+    Vector2f origin(bounds.width / 2.0f, bounds.height / 2.0f);
+
+    Vector2f originalPosition = playerSprite->getPosition();
+
+    states.transform *= getTransform();
+    states.transform.translate(origin);
+    states.transform.scale(direction, 1);
+    states.transform.translate(-origin);
+
+   playerSprite->setPosition(originalPosition);
+
+    target.draw(*playerSprite, states);
 }
 
 Player::Player()
@@ -66,10 +77,12 @@ void Player::handleInput()
 {
     if (Keyboard::isKeyPressed(Keyboard::Left) || Keyboard::isKeyPressed(Keyboard::A)) {
         velocity.x = -playerSpeed;
+        direction = -1;
         animateWalking();
     }
     else if (Keyboard::isKeyPressed(Keyboard::Right) || Keyboard::isKeyPressed(Keyboard::D)) {
         velocity.x = playerSpeed;
+        direction = 1;
         animateWalking();
     }
     else {
@@ -91,6 +104,7 @@ Vector2f Player::getPosition()
 {
     return Vector2f(playerX, playerY);
 }
+
 
 void Player::updatePosition(int tileX, int tileY, int tileSize, int currentTileValue, float deltaTime)
 {
