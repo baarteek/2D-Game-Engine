@@ -5,7 +5,7 @@ Engine::Engine(unsigned int width, unsigned int height, string title, int style)
 	window.create(VideoMode(width, height), title, style);
 	view.setSize(width, height);
 	setBackgroundColor(47, 145, 250);
-	initMap("assets/maps/first_map.txt");
+	initMap("assets/maps/test.txt");
 	initPlayer(map);
 }
 
@@ -16,6 +16,8 @@ void Engine::initMap(string mapPath)
 		map = new TileMap();
 		map->load("assets/tilemap.png", sf::Vector2u(18, 18), levelData);
 		map->setGravity(500);
+		vector<int> collisionTilesID = { 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24, 25, 26, 41, 42, 43, 44, 61, 62, 63, 64, 81, 82, 83, 84, 101, 102, 103, 104, 121, 122, 123, 124, 141, 142, 143, 144};
+		map->setCollisonTilesID(collisionTilesID);
 	}
 }
 

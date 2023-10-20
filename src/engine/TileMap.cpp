@@ -95,4 +95,21 @@ vector<Vector2f> TileMap::getAllTileCoordinates(int tileID)
     return coordinates;
 }
 
+void TileMap::setCollisonTilesID(vector<int> collisionTiles) {
+    this->collisionTiles = collisionTiles;
+}
+
+int TileMap::getCollisionTileID(int index) {
+    if (index >= 0 && index < collisionTiles.size()) {
+        return collisionTiles[index];
+    }
+    else {
+        return -1;
+    }
+}
+
+int TileMap::getCollisionTilesCount() const {
+    return collisionTiles.size();
+}
+
 

@@ -92,7 +92,7 @@ void Player::handleInput()
 
 bool Player::isJumping(int currentTileValue)
 {
-    return (Keyboard::isKeyPressed(Keyboard::Space) || Keyboard::isKeyPressed(Keyboard::W)) && currentTileValue == 23;
+    return (isOnCollisionTile(currentTileValue) && (Keyboard::isKeyPressed(Keyboard::Space) || Keyboard::isKeyPressed(Keyboard::W)));
 }
 
 void Player::updateVelocity(float deltaTime)
@@ -106,12 +106,12 @@ Vector2f Player::getPosition()
 }
 
 
-void Player::updatePosition(int tileX, int tileY, int tileSize, int currentTileValue, float deltaTime)
-{
+void Player::updatePosition(int tileX, int tileY, int tileSize, int currentTileValue, float deltaTime) {
     Vector2f newPosition = getPosition() + velocity * deltaTime;
+    cout << currentTileValue << endl;
 
     if (velocity.y > 0) {
-        if (currentTileValue != 23) {
+        if (!isOnCollisionTile(currentTileValue)) {
             setPosition(newPosition.x, newPosition.y);
         }
         else {
@@ -123,6 +123,15 @@ void Player::updatePosition(int tileX, int tileY, int tileSize, int currentTileV
     else {
         setPosition(newPosition.x, newPosition.y);
     }
+}
+
+bool Player::isOnCollisionTile(int currentTileValue) {
+    bool isOnCollisionTile = false;
+    for (int i = 0; i < tileMap->getCollisionTilesCount(); i++) {
+        if (tileMap->getCollisionTileID(i) == currentTileValue)
+            isOnCollisionTile = true;
+    }
+    return isOnCollisionTile;
 }
 
 void Player::setPlayerSpeed(float speed)

@@ -15,6 +15,7 @@ private:
     Texture m_tileset;
     vector<vector<int>> tiles;
     float gravity;
+    vector<int> collisionTiles;
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
@@ -25,4 +26,7 @@ public:
     void setGravity(float gravity);
     float getGravity();
     vector<Vector2f> getAllTileCoordinates(int tileID);
+    void setCollisonTilesID(vector<int> collisionTiles);
+    int getCollisionTileID(int index);
+    int getCollisionTilesCount() const;
 };

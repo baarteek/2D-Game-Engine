@@ -4,8 +4,9 @@
 
 int main() {
 	Engine engine(800, 600, "2DGameEngine", sf::Style::Close | sf::Style::Resize);
-	engine.setFramesPerSecond(60);
 	engine.setVerticalSync(true);
+	engine.setFramesPerSecond(60);
+	
 
 	try {
 		engine.run();
