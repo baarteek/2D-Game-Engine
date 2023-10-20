@@ -3,6 +3,7 @@
 Engine::Engine(unsigned int width, unsigned int height, string title, int style)
 {
 	window.create(VideoMode(width, height), title, style);
+	view.setSize(width, height);
 	setBackgroundColor(47, 145, 250);
 	initMap("assets/maps/first_map.txt");
 	initPlayer(map);
@@ -14,7 +15,7 @@ void Engine::initMap(string mapPath)
 	if (FileReader::readMapFile(mapPath, levelData)) {
 		map = new TileMap();
 		map->load("assets/tilemap.png", sf::Vector2u(18, 18), levelData);
-		map->setGravity(200);
+		map->setGravity(500);
 	}
 }
 
@@ -24,7 +25,7 @@ void Engine::initPlayer(TileMap* tileMap)
 	player->setPosition(50, 50);
 	player->setTileMap(tileMap);
 	player->setVelocity(Vector2f(0, 150));
-	player->setJumpStrenght(100);
+	player->setJumpStrenght(150);
 	player->setPlayerSpeed(150);
 }
 
@@ -58,6 +59,8 @@ void Engine::renderScene()
 	window.draw(*map);
 	window.draw(*player);
 	player->update(deltaTime.asSeconds());
+	view.setCenter(player->getPosition());
+	window.setView(view);
 
 	window.display();
 }
@@ -83,3 +86,5 @@ void Engine::setBackgroundColor(int red, int green, int blue)
 	backgroundColor.g = green;
 	backgroundColor.b = blue;
 }
+
+

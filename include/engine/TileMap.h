@@ -24,4 +24,5 @@ public:
     int getTileValue(unsigned int x, unsigned int y) const;
     void setGravity(float gravity);
     float getGravity();
+    vector<Vector2f> getAllTileCoordinates(int tileID);
 };

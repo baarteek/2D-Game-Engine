@@ -17,6 +17,7 @@ private:
 	TileMap* map;
 	Player* player;
 	Color backgroundColor;
+	View view;
 
 	void handleEvent();
 	void renderScene();

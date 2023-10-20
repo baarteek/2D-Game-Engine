@@ -39,4 +39,5 @@ public:
 	bool isJumping(int currentTileValue);
 	void updateVelocity(float deltaTime);
 	void updatePosition(int tileX, int tileY, int tileSize, int currentTileValue, float deltaTime);
+	Vector2f getPosition();
 };

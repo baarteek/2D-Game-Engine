@@ -78,3 +78,21 @@ float TileMap::getGravity()
     return gravity;
 }
 
+vector<Vector2f> TileMap::getAllTileCoordinates(int tileID)
+{
+    vector<Vector2f> coordinates;
+
+    for (unsigned int y = 0; y < tiles.size(); ++y)
+    {
+        for (unsigned int x = 0; x < tiles[y].size(); ++x)
+        {
+            if (tiles[y][x] == tileID)
+            {
+                coordinates.push_back(Vector2f(x * 18, y * 18));
+            }
+        }
+    }
+    return coordinates;
+}
+
+
