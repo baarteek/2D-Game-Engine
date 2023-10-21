@@ -64,6 +64,7 @@ void Player::update(float deltaTime)
     int currentTileValue = tileMap->getTileValue(tileX, tileY);
 
     handleInput();
+    handleCollisions();
 
     if (isJumping(currentTileValue)) {
         velocity.y = -jumpStrength;
@@ -108,7 +109,6 @@ Vector2f Player::getPosition()
 
 void Player::updatePosition(int tileX, int tileY, int tileSize, int currentTileValue, float deltaTime) {
     Vector2f newPosition = getPosition() + velocity * deltaTime;
-    cout << currentTileValue << endl;
 
     if (velocity.y > 0) {
         if (!isOnCollisionTile(currentTileValue)) {
@@ -132,6 +132,38 @@ bool Player::isOnCollisionTile(int currentTileValue) {
             isOnCollisionTile = true;
     }
     return isOnCollisionTile;
+}
+
+void Player::handleCollisions()
+{
+    int tileSize = 18;
+    int tileX = static_cast<int>((playerX + playerSprite->getTexture()->getSize().x / 2) / tileSize);
+    int tileY = static_cast<int>((playerY + playerSprite->getTexture()->getSize().y) / tileSize);
+
+    int currentTileValue = tileMap->getTileValue(tileX, tileY);
+
+    if (velocity.x > 0) {
+        int nextTileX = static_cast<int>((playerX + playerSprite->getTexture()->getSize().x / 2 + tileSize / 2) / tileSize);
+        int nextTileY = static_cast<int>((playerY + playerSprite->getTexture()->getSize().y / 2) / tileSize);
+        int nextTileValue = tileMap->getTileValue(nextTileX, nextTileY);
+
+        if (isOnCollisionTile(nextTileValue)) {
+            velocity.x = 0.0f;
+            float newX = nextTileX * tileSize - playerSprite->getTexture()->getSize().x / 2 - (tileSize / 2);
+            setPosition(newX, playerY);
+        }
+    }
+    else if (velocity.x < 0) {
+        int prevTileX = static_cast<int>((playerX + playerSprite->getTexture()->getSize().x / 2 - tileSize / 2) / tileSize);
+        int prevTileY = static_cast<int>((playerY + playerSprite->getTexture()->getSize().y / 2) / tileSize);
+        int prevTileValue = tileMap->getTileValue(prevTileX, prevTileY);
+
+        if (isOnCollisionTile(prevTileValue)) {
+            velocity.x = 0.0f;
+            float newX = (prevTileX + 1) * tileSize + playerSprite->getTexture()->getSize().x / 2 - (tileSize);
+            setPosition(newX, playerY);
+        }
+    }
 }
 
 void Player::setPlayerSpeed(float speed)

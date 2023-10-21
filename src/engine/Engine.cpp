@@ -5,7 +5,7 @@ Engine::Engine(unsigned int width, unsigned int height, string title, int style)
 	window.create(VideoMode(width, height), title, style);
 	view.setSize(width, height);
 	setBackgroundColor(47, 145, 250);
-	initMap("assets/maps/test.txt");
+	initMap("assets/maps/jump_test.txt");
 	initPlayer(map);
 }
 
