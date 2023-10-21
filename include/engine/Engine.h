@@ -5,6 +5,7 @@
 
 #include "TileMap.h"
 #include "Player.h"
+#include "Menu.h"
 
 using namespace sf;
 using namespace std;
@@ -17,7 +18,10 @@ private:
 	TileMap* map;
 	Player* player;
 	Color backgroundColor;
-	View view;
+	View gameView;
+	View menuView;
+	Menu *menu;
+	bool isInGameMode;
 
 	void handleEvent();
 	void renderScene();

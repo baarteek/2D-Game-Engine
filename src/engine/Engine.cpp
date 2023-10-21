@@ -3,10 +3,13 @@
 Engine::Engine(unsigned int width, unsigned int height, string title, int style)
 {
 	window.create(VideoMode(width, height), title, style);
-	view.setSize(width, height);
+	gameView.setSize(width, height);
+	menuView.setSize(width, height);
 	setBackgroundColor(47, 145, 250);
-	initMap("assets/maps/jump_test.txt");
+	initMap("assets/maps/first_map.txt");
 	initPlayer(map);
+	menu = new Menu(width, height);
+	isInGameMode = true;
 }
 
 void Engine::initMap(string mapPath)
@@ -27,7 +30,7 @@ void Engine::initPlayer(TileMap* tileMap)
 	player->setPosition(50, 50);
 	player->setTileMap(tileMap);
 	player->setVelocity(Vector2f(0, 150));
-	player->setJumpStrenght(150);
+	player->setJumpStrenght(200);
 	player->setPlayerSpeed(150);
 }
 
@@ -50,6 +53,11 @@ void Engine::handleEvent()
 			break;
 
 		}
+		if (isInGameMode) {
+			
+		}else {
+
+		}
 	}
 }
 
@@ -58,12 +66,17 @@ void Engine::renderScene()
 	deltaTime = clock.restart();
 	window.clear(backgroundColor);
 
-	window.draw(*map);
-	window.draw(*player);
-	player->update(deltaTime.asSeconds());
-	view.setCenter(player->getPosition());
-	window.setView(view);
-
+	if (isInGameMode) {
+		window.draw(*map);
+		window.draw(*player);
+		player->update(deltaTime.asSeconds());
+		gameView.setCenter(player->getPosition());
+		window.setView(gameView);
+	}
+	else {
+		window.draw(*menu);
+	}
+	
 	window.display();
 }
 
