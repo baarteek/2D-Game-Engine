@@ -6,6 +6,7 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "Menu.h"
+#include "PrimitiveRenderer.h"
 
 using namespace sf;
 using namespace std;
@@ -21,6 +22,7 @@ private:
 	View gameView;
 	View menuView;
 	Menu *menu;
+	PrimitiveRenderer* primitive;
 	bool isInGameMode;
 
 	void handleEvent();

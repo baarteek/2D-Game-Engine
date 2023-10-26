@@ -31,3 +31,41 @@ void PrimitiveRenderer::drawPolygon(std::vector<Vector2f>& points, Color color)
     window.draw(polygon);
 }
 
+void PrimitiveRenderer::drawLine(int x0, int y0, int x1, int y1, Color lineColor)
+{
+    int dx = abs(x1 - x0);
+    int dy = abs(y1 - y0);
+    int sx = (x0 < x1) ? 1 : -1;
+    int sy = (y0 < y1) ? 1 : -1;
+
+    if (dx > dy) {
+        int err = dx / 2;
+        while (x0 != x1) {
+            RectangleShape pixel(sf::Vector2f(1, 1));
+            pixel.setPosition(x0, y0);
+            pixel.setFillColor(lineColor);
+            window.draw(pixel);
+            x0 += sx;
+            err -= dy;
+            if (err < 0) {
+                y0 += sy;
+                err += dx;
+            }
+        }
+    } else {
+        int err = dy / 2;
+        while (y0 != y1) {
+            RectangleShape pixel(sf::Vector2f(1, 1));
+            pixel.setPosition(x0, y0);
+            pixel.setFillColor(lineColor);
+            window.draw(pixel);
+            y0 += sy;
+            err -= dx;
+            if (err < 0) {
+                x0 += sx;
+                err += dy;
+            }
+        }
+    }
+}
+

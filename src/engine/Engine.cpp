@@ -9,6 +9,7 @@ Engine::Engine(unsigned int width, unsigned int height, string title, int style)
 	initMap("assets/maps/first_map.txt");
 	initPlayer(map);
 	menu = new Menu(width, height);
+	primitive = new PrimitiveRenderer(window);
 	isInGameMode = true;
 }
 
