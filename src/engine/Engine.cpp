@@ -5,10 +5,11 @@ Engine::Engine(unsigned int width, unsigned int height, string title, int style)
 	window.create(VideoMode(width, height), title, style);
 	gameView.setSize(width, height);
 	menuView.setSize(width, height);
+	menuView.setCenter(width / 2, height / 2);
 	setBackgroundColor(47, 145, 250);
 	initMap("assets/maps/first_map.txt");
 	initPlayer(map);
-	menu = new Menu(width, height);
+	menu = new Menu(width, height, 32, "assets/menu/backgroundMenu.png");
 	primitive = new PrimitiveRenderer(window);
 	isGamePaused = false;
 }
@@ -55,6 +56,8 @@ void Engine::handleEvent()
 		case Event::KeyPressed:
 			if (Keyboard::isKeyPressed(Keyboard::Escape)) {
 				isGamePaused = !isGamePaused;
+				menu->setPosition(menuView.getSize().x, menuView.getSize().y);
+				menu->setMenu();
 			}
 			break;
 		}
@@ -67,6 +70,7 @@ void Engine::renderScene()
 	window.clear(backgroundColor);
 
 	if (!isGamePaused) {
+		setBackgroundColor(47, 145, 250);
 		window.draw(*map);
 		window.draw(*player);
 		player->update(deltaTime.asSeconds());
@@ -74,9 +78,9 @@ void Engine::renderScene()
 		window.setView(gameView);
 	}
 	else {
-		window.draw(*map);
-		window.draw(*player);
-		//window.draw(*menu);
+		setBackgroundColor(0, 0, 0);
+		window.setView(menuView);
+		window.draw(*menu);
 	}
 	
 	window.display();
