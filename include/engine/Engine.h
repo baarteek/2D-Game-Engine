@@ -22,8 +22,6 @@ private:
 	View gameView;
 	View menuView;
 	Menu *menu;
-	PrimitiveRenderer* primitive;
-	bool isGamePaused;
 
 	void handleEvent();
 	void renderScene();

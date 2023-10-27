@@ -34,6 +34,8 @@ private:
 	void handleMenuSelection();
 
 public:
+	bool inMenuMode;
+
 	Menu(unsigned int width, unsigned int height, unsigned int fontSize, string backgroundImagePath);
 	void setMenu();
 	void setPosition(unsigned int width, unsigned int height);

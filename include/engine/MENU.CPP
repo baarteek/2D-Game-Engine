@@ -13,6 +13,7 @@ Menu::Menu(unsigned int width, unsigned int height, unsigned int fontSize, strin
 {
     this->fontSize = fontSize;
 	setPosition(width, height);
+    inMenuMode = true;
 	setMenu();
     selectedItem = 0;
     menuItems = {&playText, &loadLevelText, &settingsText, &exitText};
@@ -152,7 +153,7 @@ void Menu::handleMenuSelection()
 {
     switch (selectedItem) {
     case 0:
-        cout << "Play" << endl;
+        inMenuMode = false;
         break;
     case 1:
         cout << "Load Level" << endl;
@@ -161,7 +162,7 @@ void Menu::handleMenuSelection()
         cout << "Settings" << endl;
         break;
     case 3:
-        cout << "Exit" << endl;
+        exit(0);
         break;
     }
 }
