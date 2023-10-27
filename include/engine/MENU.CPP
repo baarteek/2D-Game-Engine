@@ -1,10 +1,22 @@
 #include "Menu.h"
 
+void Menu::draw(RenderTarget& target, RenderStates states) const
+{
+    target.draw(backgroundSprite, states);
+    target.draw(playText, states);
+    target.draw(loadLevelText, states);
+    target.draw(settingsText, states);
+    target.draw(exitText, states);
+}
+
 Menu::Menu(unsigned int width, unsigned int height, unsigned int fontSize, string backgroundImagePath)
 {
     this->fontSize = fontSize;
 	setPosition(width, height);
 	setMenu();
+    selectedItem = 0;
+    menuItems = {&playText, &loadLevelText, &settingsText, &exitText};
+    setColors(Color::White, Color::Cyan);
     if (!loadBackground(backgroundImagePath)) {
         cerr << "Error loading background image" << endl;
     }
@@ -21,19 +33,10 @@ void Menu::setMenu()
     if (loadFont()) {
         setMenuText();
         setMenuTextSize();
-        setMenuTextFillColors(Color::White);
+        setMenuTextFillColors();
         setMenuTextOrigins();
         setMenuTextPositions();
     }
-}
-
-void Menu::draw(RenderTarget& target, RenderStates states) const
-{
-	target.draw(backgroundSprite, states);
-	target.draw(playText, states);
-	target.draw(loadLevelText, states);
-	target.draw(settingsText, states);
-	target.draw(exitText, states);
 }
 
 bool Menu::loadFont()
@@ -76,13 +79,25 @@ void Menu::setMenuTextSize()
     loadLevelText.setCharacterSize(fontSize);
 }
 
-void Menu::setMenuTextFillColors(Color color)
+void Menu::setMenuTextFillColors()
 {
-    playText.setFillColor(color);
+    playText.setFillColor(selectedItemColor);
     settingsText.setFillColor(color);
     exitText.setFillColor(color);
     loadLevelText.setFillColor(color);
 }
+
+void Menu::setColors(Color regularColor, Color selectedItemColor)
+{
+    this->selectedItemColor = selectedItemColor;
+    this->color = regularColor;
+}
+
+void Menu::setSelectedItem(int itemID)
+{
+    this->selectedItem = itemID;
+}
+
 
 void Menu::setMenuTextOrigins()
 {
@@ -107,4 +122,49 @@ void Menu::setMenuTextPositions()
     settingsText.setPosition(centerX, centerY - 150 + 2 * buttonSpacing);
     exitText.setPosition(centerX, centerY - 150 + 3 * buttonSpacing);
 }
+
+void Menu::handleKeyPress(Keyboard::Key key)
+{
+    if (key == Keyboard::W || key == Keyboard::Up) {
+        if (selectedItem > 0) {
+            menuItems[selectedItem]->setFillColor(color);
+            menuItems[selectedItem]->setScale(Vector2f(1.0f, 1.0f));
+            selectedItem--;
+            menuItems[selectedItem]->setFillColor(selectedItemColor);
+            menuItems[selectedItem]->setScale(Vector2f(1.3f, 1.3f));
+        }
+    }
+    else if (key == Keyboard::S || key == Keyboard::Down) {
+        if (selectedItem < menuItems.size() - 1) {
+            menuItems[selectedItem]->setFillColor(color);
+            menuItems[selectedItem]->setScale(Vector2f(1.0f, 1.0f));
+            selectedItem++;
+            menuItems[selectedItem]->setFillColor(selectedItemColor);
+            menuItems[selectedItem]->setScale(Vector2f(1.3f, 1.3f));
+        }
+    }
+    else if (key == Keyboard::Return) {
+        handleMenuSelection();
+    }
+}
+
+void Menu::handleMenuSelection()
+{
+    switch (selectedItem) {
+    case 0:
+        cout << "Play" << endl;
+        break;
+    case 1:
+        cout << "Load Level" << endl;
+        break;
+    case 2:
+        cout << "Settings" << endl;
+        break;
+    case 3:
+        cout << "Exit" << endl;
+        break;
+    }
+}
+
+
 
