@@ -23,7 +23,7 @@ private:
 	View menuView;
 	Menu *menu;
 	PrimitiveRenderer* primitive;
-	bool isInGameMode;
+	bool isGamePaused;
 
 	void handleEvent();
 	void renderScene();

@@ -10,7 +10,7 @@ Engine::Engine(unsigned int width, unsigned int height, string title, int style)
 	initPlayer(map);
 	menu = new Menu(width, height);
 	primitive = new PrimitiveRenderer(window);
-	isInGameMode = true;
+	isGamePaused = false;
 }
 
 void Engine::initMap(string mapPath)
@@ -52,12 +52,11 @@ void Engine::handleEvent()
 		case Event::Closed:
 			window.close();
 			break;
-
-		}
-		if (isInGameMode) {
-			
-		}else {
-
+		case Event::KeyPressed:
+			if (Keyboard::isKeyPressed(Keyboard::Escape)) {
+				isGamePaused = !isGamePaused;
+			}
+			break;
 		}
 	}
 }
@@ -67,7 +66,7 @@ void Engine::renderScene()
 	deltaTime = clock.restart();
 	window.clear(backgroundColor);
 
-	if (isInGameMode) {
+	if (!isGamePaused) {
 		window.draw(*map);
 		window.draw(*player);
 		player->update(deltaTime.asSeconds());
@@ -75,7 +74,9 @@ void Engine::renderScene()
 		window.setView(gameView);
 	}
 	else {
-		window.draw(*menu);
+		window.draw(*map);
+		window.draw(*player);
+		//window.draw(*menu);
 	}
 	
 	window.display();
