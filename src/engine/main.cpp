@@ -7,7 +7,6 @@ int main() {
 	engine.setVerticalSync(true);
 	engine.setFramesPerSecond(60);
 	
-
 	try {
 		engine.run();
 	} catch (const std::exception& e) {

@@ -17,6 +17,7 @@ Menu::Menu(unsigned int width, unsigned int height, unsigned int fontSize, strin
 	setMenu();
     selectedItem = 0;
     menuItems = {&playText, &loadLevelText, &settingsText, &exitText};
+    buttonScaleVector = Vector2f(1.35f, 1.35f);
     setColors(Color::White, Color::Cyan);
     if (!loadBackground(backgroundImagePath)) {
         cerr << "Error loading background image" << endl;
@@ -94,6 +95,17 @@ void Menu::setColors(Color regularColor, Color selectedItemColor)
     this->color = regularColor;
 }
 
+void Menu::restartMenuItems()
+{
+    setSelectedItem(0);
+    for (int i = 1; i < menuItems.size(); i++) {
+        menuItems[i]->setFillColor(color);
+        menuItems[i]->setScale(Vector2f(1.0f, 1.0f));
+    }
+    menuItems[0]->setFillColor(selectedItemColor);
+    menuItems[0]->setScale(buttonScaleVector);
+}
+
 void Menu::setSelectedItem(int itemID)
 {
     this->selectedItem = itemID;
@@ -132,7 +144,7 @@ void Menu::handleKeyPress(Keyboard::Key key)
             menuItems[selectedItem]->setScale(Vector2f(1.0f, 1.0f));
             selectedItem--;
             menuItems[selectedItem]->setFillColor(selectedItemColor);
-            menuItems[selectedItem]->setScale(Vector2f(1.3f, 1.3f));
+            menuItems[selectedItem]->setScale(buttonScaleVector);
         }
     }
     else if (key == Keyboard::S || key == Keyboard::Down) {
@@ -141,10 +153,10 @@ void Menu::handleKeyPress(Keyboard::Key key)
             menuItems[selectedItem]->setScale(Vector2f(1.0f, 1.0f));
             selectedItem++;
             menuItems[selectedItem]->setFillColor(selectedItemColor);
-            menuItems[selectedItem]->setScale(Vector2f(1.3f, 1.3f));
+            menuItems[selectedItem]->setScale(buttonScaleVector);
         }
     }
-    else if (key == Keyboard::Return) {
+    else if (key == Keyboard::Return || key == Keyboard::Space) {
         handleMenuSelection();
     }
 }

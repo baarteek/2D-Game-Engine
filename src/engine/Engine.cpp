@@ -57,7 +57,7 @@ void Engine::handleEvent()
 				menu->inMenuMode = !menu->inMenuMode;
 				menu->setPosition(menuView.getSize().x, menuView.getSize().y);
 				menu->setMenu();
-				menu->setSelectedItem(0);
+				menu->restartMenuItems();
 			}
 			if (menu->inMenuMode) {
 				menu->handleKeyPress(event.key.code);

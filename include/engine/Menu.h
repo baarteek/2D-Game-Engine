@@ -22,6 +22,7 @@ private:
 	int selectedItem;
 	Color color;
 	Color selectedItemColor;
+	Vector2f buttonScaleVector;
 
 	virtual void draw(RenderTarget& target, RenderStates states) const;
 	bool loadFont();
@@ -42,4 +43,5 @@ public:
 	void handleKeyPress(Keyboard::Key key);
 	void setSelectedItem(int itemID);
 	void setColors(Color regularColor, Color selectedItemColor);
+	void restartMenuItems();
 };
