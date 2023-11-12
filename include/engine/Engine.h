@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Menu.h"
 #include "PrimitiveRenderer.h"
+#include "Point2D.h"
 
 using namespace sf;
 using namespace std;
