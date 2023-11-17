@@ -4,12 +4,34 @@ PrimitiveRenderer::PrimitiveRenderer(RenderWindow& renderWindow) : window(render
 {
 }
 
+void PrimitiveRenderer::drawPixel(float x, float y, Vertex& point)
+{
+    point.position = sf::Vector2f(x, y);
+    window.draw(&point, 1, Points);
+}
+
 void PrimitiveRenderer::drawCircle(float x, float y, float radius, Color color)
 {
     CircleShape circle(radius);
     circle.setPosition(x, y);
     circle.setFillColor(color);
     window.draw(circle);
+}
+
+void PrimitiveRenderer::drawCircleWithSymmetryAlgorithm(float x, float y, float radius, Color color)
+{
+    Vertex point;
+    point.color = color;
+
+    for (double alpha = 0; alpha <= PI / 2; alpha += 0.01) {
+        float dx = radius * cos(alpha);
+        float dy = radius * sin(alpha);
+
+        drawPixel(x + dx, y + dy, point);
+        drawPixel(x + dx, y - dy, point);
+        drawPixel(x - dx, y + dy, point);
+        drawPixel(x - dx, y - dy, point);
+    }
 }
 
 void PrimitiveRenderer::drawRectangle(float x, float y, float width, float height, Color color)

@@ -72,6 +72,9 @@ void Engine::renderScene()
 	deltaTime = clock.restart();
 	window.clear(backgroundColor);
 
+	PrimitiveRenderer* primitive = new PrimitiveRenderer(window);
+	primitive->drawCircleWithSymmetryAlgorithm(50, 50, 50, Color::Red);
+
 	if (!menu->inMenuMode) {
 		setBackgroundColor(47, 145, 250);
 		window.draw(*map);
