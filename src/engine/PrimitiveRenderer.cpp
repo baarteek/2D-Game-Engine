@@ -1,5 +1,48 @@
 #include "PrimitiveRenderer.h"
 
+bool PrimitiveRenderer::checkForIntersectingLines(const std::vector<Point2D>& points)
+{
+    size_t n = points.size();
+    for (size_t i = 0; i < n; i++) {
+        for (size_t j = 0; j < n; j++) {
+            if ((j != i) && (j != (i + 1) % n) && (i != (j + 1) % n)) {
+                if (doLinesIntersect(points[i], points[(i + 1) % n], points[j], points[(j + 1) % n])) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+bool PrimitiveRenderer::doLinesIntersect(const Point2D& p1, const Point2D& q1, const Point2D& p2, const Point2D& q2)
+{
+    auto orientation = []( Point2D p,  Point2D q,  Point2D r) -> int {
+        float val = (q.getY() - p.getY()) * (r.getX() - q.getX()) - (q.getX() - p.getX()) * (r.getY() - q.getY());
+        if (val == 0) return 0;  
+        return (val > 0) ? 1 : 2;
+        };
+
+    int o1 = orientation(p1, q1, p2);
+    int o2 = orientation(p1, q1, q2);
+    int o3 = orientation(p2, q2, p1);
+    int o4 = orientation(p2, q2, q1);
+
+    if (o1 != o2 && o3 != o4) return true;
+    if (o1 == 0 && onSegment(p1, p2, q1)) return true;
+    if (o2 == 0 && onSegment(p1, q2, q1)) return true;
+    if (o3 == 0 && onSegment(p2, p1, q2)) return true;
+    if (o4 == 0 && onSegment(p2, q1, q2)) return true;
+
+    return false;
+}
+
+bool PrimitiveRenderer::onSegment(Point2D p, Point2D q, Point2D r)
+{
+    return q.getX() <= std::max(p.getX(), r.getX()) && q.getX() >= std::min(p.getX(), r.getX()) &&
+        q.getY() <= std::max(p.getY(), r.getY()) && q.getY() >= std::min(p.getY(), r.getY());
+}
+
 PrimitiveRenderer::PrimitiveRenderer(RenderWindow& renderWindow) : window(renderWindow)
 {
 }
@@ -52,6 +95,21 @@ void PrimitiveRenderer::drawPolygon(std::vector<Vector2f>& points, Color color)
     polygon.setFillColor(color);
     window.draw(polygon);
 }
+
+void PrimitiveRenderer::drawPoint2DPolygon(const std::vector<Point2D>& points, sf::Color color)
+{
+    if (points.size() < 3 || checkForIntersectingLines(points)) {
+        return;
+    }
+
+    for (size_t i = 0; i < points.size(); i++) {
+         Point2D current = points[i];
+         Point2D next = points[(i + 1) % points.size()]; 
+
+        drawLine(current.getX(), current.getY(), next.getX(), next.getY(), color);
+    }
+}
+
 
 void PrimitiveRenderer::drawLine(int x0, int y0, int x1, int y1, Color lineColor)
 {

@@ -25,8 +25,3 @@ void Point2D::setY(float newY)
 {
 	y = newY;
 }
-
-void Point2D::draw(PrimitiveRenderer& renderer, float radius, Color color)
-{
-	renderer.drawCircle(x, y, radius, color);
-}

@@ -72,8 +72,6 @@ void Engine::renderScene()
 	deltaTime = clock.restart();
 	window.clear(backgroundColor);
 
-	PrimitiveRenderer* primitive = new PrimitiveRenderer(window);
-	primitive->drawEllipse(50, 50, 100, 80, Color::Red);
 
 	if (!menu->inMenuMode) {
 		setBackgroundColor(47, 145, 250);
