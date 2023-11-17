@@ -73,7 +73,7 @@ void Engine::renderScene()
 	window.clear(backgroundColor);
 
 	PrimitiveRenderer* primitive = new PrimitiveRenderer(window);
-	primitive->drawCircleWithSymmetryAlgorithm(50, 50, 50, Color::Red);
+	primitive->drawEllipse(50, 50, 100, 80, Color::Red);
 
 	if (!menu->inMenuMode) {
 		setBackgroundColor(47, 145, 250);

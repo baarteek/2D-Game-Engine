@@ -91,3 +91,19 @@ void PrimitiveRenderer::drawLine(int x0, int y0, int x1, int y1, Color lineColor
     }
 }
 
+void PrimitiveRenderer::drawEllipse(float x, float y, float radiusX, float radiusY, sf::Color color)
+{
+    Vertex point;
+    point.color = color;
+
+    for (double alpha = 0; alpha <= 2 * PI; alpha += 0.01) {
+        float dx = radiusX * cos(alpha);
+        float dy = radiusY * sin(alpha);
+
+        drawPixel(x + dx, y + dy, point);
+        drawPixel(x + dx, y - dy, point);
+        drawPixel(x - dx, y + dy, point);
+        drawPixel(x - dx, y - dy, point);
+    }
+}
+
