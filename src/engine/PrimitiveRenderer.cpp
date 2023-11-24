@@ -43,14 +43,14 @@ bool PrimitiveRenderer::onSegment(Point2D p, Point2D q, Point2D r)
         q.getY() <= std::max(p.getY(), r.getY()) && q.getY() >= std::min(p.getY(), r.getY());
 }
 
-PrimitiveRenderer::PrimitiveRenderer(RenderWindow& renderWindow) : window(renderWindow)
+PrimitiveRenderer::PrimitiveRenderer(RenderWindow* renderWindow) : window(renderWindow)
 {
 }
 
 void PrimitiveRenderer::drawPixel(float x, float y, Vertex& point)
 {
     point.position = sf::Vector2f(x, y);
-    window.draw(&point, 1, Points);
+    window->draw(&point, 1, Points);
 }
 
 void PrimitiveRenderer::drawCircle(float x, float y, float radius, Color color)
@@ -58,7 +58,7 @@ void PrimitiveRenderer::drawCircle(float x, float y, float radius, Color color)
     CircleShape circle(radius);
     circle.setPosition(x, y);
     circle.setFillColor(color);
-    window.draw(circle);
+    window->draw(circle);
 }
 
 void PrimitiveRenderer::drawCircleWithSymmetryAlgorithm(float x, float y, float radius, Color color)
@@ -82,7 +82,7 @@ void PrimitiveRenderer::drawRectangle(float x, float y, float width, float heigh
     RectangleShape rectangle(Vector2f(width, height));
     rectangle.setPosition(x, y);
     rectangle.setFillColor(color);
-    window.draw(rectangle);
+    window->draw(rectangle);
 }
 
 void PrimitiveRenderer::drawPolygon(std::vector<Vector2f>& points, Color color)
@@ -93,7 +93,7 @@ void PrimitiveRenderer::drawPolygon(std::vector<Vector2f>& points, Color color)
         polygon.setPoint(i, points[i]);
     }
     polygon.setFillColor(color);
-    window.draw(polygon);
+    window->draw(polygon);
 }
 
 void PrimitiveRenderer::drawPoint2DPolygon(const std::vector<Point2D>& points, sf::Color color)
@@ -124,7 +124,7 @@ void PrimitiveRenderer::drawLine(int x0, int y0, int x1, int y1, Color lineColor
             RectangleShape pixel(sf::Vector2f(1, 1));
             pixel.setPosition(x0, y0);
             pixel.setFillColor(lineColor);
-            window.draw(pixel);
+            window->draw(pixel);
             x0 += sx;
             err -= dy;
             if (err < 0) {
@@ -138,7 +138,7 @@ void PrimitiveRenderer::drawLine(int x0, int y0, int x1, int y1, Color lineColor
             RectangleShape pixel(sf::Vector2f(1, 1));
             pixel.setPosition(x0, y0);
             pixel.setFillColor(lineColor);
-            window.draw(pixel);
+            window->draw(pixel);
             y0 += sy;
             err -= dx;
             if (err < 0) {
@@ -147,6 +147,20 @@ void PrimitiveRenderer::drawLine(int x0, int y0, int x1, int y1, Color lineColor
             }
         }
     }
+}
+
+Color PrimitiveRenderer::getPixelColor(int x, int y)
+{
+    if (x < 0 || y < 0 || x >= window->getSize().x || y >= window->getSize().y) {
+        return Color::Transparent;
+    }
+
+    Texture texture;
+    texture.create(window->getSize().x, window->getSize().y);
+    texture.update(*window);
+
+    Image screenshot = texture.copyToImage();
+    return screenshot.getPixel(x, y);
 }
 
 void PrimitiveRenderer::drawEllipse(float x, float y, float radiusX, float radiusY, sf::Color color)
