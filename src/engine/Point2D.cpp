@@ -38,6 +38,32 @@ void Point2D::scale(float sx, float sy)
 	TransformableObject::scale(sx, sy);
 }
 
+void Point2D::rotateAroundPoint(Point2D pivot, float angle)
+{
+	float rad = angle * 3.14159653 / 180.0;
+
+	float translatedX = x - pivot.getX();
+	float translatedY = y - pivot.getY();
+
+	float rotatedX = translatedX * cos(rad) - translatedY * sin(rad);
+	float rotatedY = translatedX * sin(rad) + translatedY * cos(rad);
+
+	x = rotatedX + pivot.getX();
+	y = rotatedY + pivot.getY();
+}
+
+void Point2D::scaleFromPoint(Point2D pivot, float sx, float sy)
+{
+	float translatedX = x - pivot.getX();
+	float translatedY = y - pivot.getY();
+
+	translatedX *= sx;
+	translatedY *= sy;
+
+	x = translatedX + pivot.getX();
+	y = translatedY + pivot.getY();
+}
+
 float Point2D::getX()
 {
 	return x;

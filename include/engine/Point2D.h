@@ -18,6 +18,8 @@ public:
     void translate(float dx, float dy) override;
     void rotate(float angle) override;
     void scale(float sx, float sy) override;
+    void rotateAroundPoint(Point2D pivot, float angle);
+    void scaleFromPoint(Point2D pivot, float sx, float sy);
 
     float getX();
     float getY();

@@ -72,9 +72,13 @@ void Engine::renderScene()
 	deltaTime = clock.restart();
 	window.clear(backgroundColor);
 
-	Point2D* point = new Point2D(10, 10, &window);
-	point->scale(50, 10);
-	point->draw();
+	Point2D start(10, 10, &window);
+	Point2D end(100, 500, &window);
+	PrimitiveRenderer* primitive = new PrimitiveRenderer(&window);
+
+	LineSegment* line = new LineSegment(start, end, primitive, Color::Red);
+	line->scale(2, 2);
+	line->draw();
 
 	if (!menu->inMenuMode) {
 		setBackgroundColor(47, 145, 250);
