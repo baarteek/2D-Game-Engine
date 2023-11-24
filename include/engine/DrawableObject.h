@@ -1,5 +1,7 @@
 #pragma once
 
+#include "GameObject.h"
+
 class DrawableObject : virtual public GameObject {
 protected:
     float opacity;
@@ -11,5 +13,5 @@ public:
     void setOpacity(float opacity);
     float getOpacity() const;
 
-    void draw() override = 0; 
+    virtual void draw() = 0;
 };

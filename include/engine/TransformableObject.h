@@ -1,5 +1,7 @@
 #pragma once
 
+#include "GameObject.h"
+#include <cmath>
 
 class TransformableObject : virtual public GameObject {
 protected:
@@ -15,7 +17,7 @@ public:
     void setRotation(float angle);
     void setScale(float sx, float sy);
 
-    void translate(float dx, float dy) override = 0;
-    void rotate(float angle) override = 0;
-    void scale(float sx, float sy) override = 0;
+    virtual void translate(float dx, float dy);
+    virtual void rotate(float angle);
+    virtual void scale(float sx, float sy);
 };

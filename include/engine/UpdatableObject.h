@@ -1,5 +1,7 @@
 #pragma once
 
+#include "GameObject.h"
+
 class UpdatableObject : virtual public GameObject {
 protected:
     bool isActive; 
@@ -11,5 +13,5 @@ public:
     void setActive(bool active);
     bool getActive() const;
 
-    void update() override = 0;
+    virtual void update() = 0;
 };

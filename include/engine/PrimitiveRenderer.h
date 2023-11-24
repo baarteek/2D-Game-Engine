@@ -18,7 +18,6 @@ private:
 	bool checkForIntersectingLines(const std::vector<Point2D>& points);
 	bool doLinesIntersect(const Point2D& p1, const Point2D& q1, const Point2D& p2, const Point2D& q2);
 	bool onSegment(Point2D p, Point2D q, Point2D r);
-	void boundaryFill(int x, int y, Color fillColor, Color boundaryColor);
 
 
 public:
@@ -32,5 +31,4 @@ public:
 	void drawPolygon(std::vector<Vector2f>& points, Color color);
 	void drawPoint2DPolygon(const std::vector<Point2D>& points, sf::Color color);
 	void drawLine(int x0, int y0, int x1, int y1, Color lineColor);
-	void drawRectangleWithBoundaryFill(float x, float y, float width, float height, Color fillColor, Color boundaryColor);
 };

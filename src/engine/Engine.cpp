@@ -72,8 +72,9 @@ void Engine::renderScene()
 	deltaTime = clock.restart();
 	window.clear(backgroundColor);
 
-	PrimitiveRenderer* primitve = new PrimitiveRenderer(&window);
-	primitve->drawRectangleWithBoundaryFill(10, 10, 100, 200, Color::Red, Color::Blue);
+	Point2D* point = new Point2D(10, 10, &window);
+	point->scale(50, 10);
+	point->draw();
 
 	if (!menu->inMenuMode) {
 		setBackgroundColor(47, 145, 250);
