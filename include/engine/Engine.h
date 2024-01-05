@@ -9,6 +9,7 @@
 #include "PrimitiveRenderer.h"
 #include "Point2D.h"
 #include "LineSegment.h"
+#include "Enemy.h"
 
 using namespace sf;
 using namespace std;
@@ -20,6 +21,7 @@ private:
 	Time deltaTime;
 	TileMap* map;
 	Player* player;
+	vector<Enemy*> enemies;
 	Color backgroundColor;
 	View gameView;
 	View menuView;

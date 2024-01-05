@@ -22,6 +22,14 @@ void Engine::initMap(string mapPath)
 		map->setGravity(500);
 		vector<int> collisionTilesID = { 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24, 25, 26, 41, 42, 43, 44, 61, 62, 63, 64, 81, 82, 83, 84, 101, 102, 103, 104, 121, 122, 123, 124, 141, 142, 143, 144};
 		map->setCollisonTilesID(collisionTilesID);
+		for (int y = 0; y < levelData.size(); y++) {
+			for (int x = 0; x < levelData[y].size(); x++) {
+				if (levelData[y][x] == 199) {  
+					sf::Vector2f enemyPosition(x * 18, y * 18);
+					enemies.push_back(new Enemy(&window, enemyPosition, 1, 1));
+				}
+			}
+		}
 	}
 }
 
@@ -72,19 +80,18 @@ void Engine::renderScene()
 	deltaTime = clock.restart();
 	window.clear(backgroundColor);
 
-	Point2D start(10, 10, &window);
-	Point2D end(100, 500, &window);
-	PrimitiveRenderer* primitive = new PrimitiveRenderer(&window);
-
-	LineSegment* line = new LineSegment(start, end, primitive, Color::Red);
-	line->scale(2, 2);
-	line->draw();
 
 	if (!menu->inMenuMode) {
 		setBackgroundColor(47, 145, 250);
 		window.draw(*map);
 		window.draw(*player);
 		player->update(deltaTime.asSeconds());
+
+		for (Enemy* enemy : enemies) {
+			enemy->update();
+			enemy->draw();
+		}
+
 		gameView.setCenter(player->getPosition());
 		window.setView(gameView);
 	}
