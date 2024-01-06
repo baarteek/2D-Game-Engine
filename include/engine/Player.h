@@ -27,6 +27,11 @@ private:
 	Time frameDuration = seconds(0.1f);
 	int direction = 1;
 	float lastHitTime;
+	bool isFlashing;            
+	float flashDuration;        
+	float lastFlashTime;       
+	sf::Color originalColor;
+	sf::Clock* clock;
 
 	virtual void draw(RenderTarget& target, RenderStates states) const;
 
@@ -51,4 +56,6 @@ public:
 	void decreaseHealth(int amount, Clock* clock);
 	Sprite getSprite();
 	bool canBeHit(Clock* clock);
+	void hit();
+	void setClock(Clock* clock);
 };

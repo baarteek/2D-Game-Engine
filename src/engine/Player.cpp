@@ -17,8 +17,9 @@ void Player::draw(RenderTarget& target, RenderStates states) const
     target.draw(*playerSprite, states);
 }
 
-Player::Player() : lastHitTime(-1.0f)
+Player::Player() : lastHitTime(-1.0f), isFlashing(false), flashDuration(0.5f), lastFlashTime(0.0f), clock(nullptr)
 {
+    originalColor = playerSprites[0].getColor();
 
 	if (!playerTexture1.loadFromFile("assets/player/player1.png") || !playerTexture2.loadFromFile("assets/player/player2.png")) {
 		cerr << "Error loading player texture" << endl;
@@ -73,6 +74,17 @@ void Player::update(float deltaTime)
 
     updateVelocity(deltaTime);
     updatePosition(tileX, tileY, tileSize, currentTileValue, deltaTime);
+
+    if (isFlashing && clock) {
+        float timeSinceFlash = clock->getElapsedTime().asSeconds() - lastFlashTime;
+        if (timeSinceFlash < flashDuration) {
+            playerSprites[0].setColor(sf::Color(252, 48, 89));
+        }
+        else {
+            playerSprites[0].setColor(originalColor);
+            isFlashing = false;
+        }
+    }
 }
 
 void Player::handleInput()
@@ -196,6 +208,19 @@ bool Player::canBeHit(Clock* clock)
     float currentTime = clock->getElapsedTime().asSeconds();
     return currentTime - lastHitTime >= 1.0f;
 }
+
+void Player::hit() {
+    if (clock) {
+        isFlashing = true;
+        lastFlashTime = clock->getElapsedTime().asSeconds(); 
+    }
+}
+
+void Player::setClock(Clock* clock)
+{
+    this->clock = clock;
+}
+
 
 void Player::setPlayerSpeed(float speed)
 {

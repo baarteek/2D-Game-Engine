@@ -38,6 +38,7 @@ void Engine::initPlayer(TileMap* tileMap)
 	player->setJumpStrenght(200);
 	player->setPlayerSpeed(150);
 	player->setHealth(6);
+	player->setClock(&globalClock);
 }
 
 void Engine::initEnemy(vector<vector<int>> levelData)
@@ -106,6 +107,7 @@ void Engine::renderScene()
 
 			if (checkCollision(playerPosition, enemyPosition, 18)) {
 				player->decreaseHealth(1, &globalClock);
+				player->hit();
 				ui->setHealth(player->getHealth());
 			}
 		}
