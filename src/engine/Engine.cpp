@@ -27,6 +27,7 @@ void Engine::initMap(string mapPath)
 
 		initEnemy(levelData);
 		initCoins(levelData);
+		initEmeralds(levelData);
 	}
 }
 
@@ -61,6 +62,18 @@ void Engine::initCoins(vector<vector<int>> levelData)
 			if (levelData[y][x] == 152) {
 				sf::Vector2f coinPosition(x * 18, y * 18);
 				coins.push_back(new Coin(&window, coinPosition));
+			}
+		}
+	}
+}
+
+void Engine::initEmeralds(vector<vector<int>> levelData)
+{
+	for (int y = 0; y < levelData.size(); y++) {
+		for (int x = 0; x < levelData[y].size(); x++) {
+			if (levelData[y][x] == 153) {
+				sf::Vector2f coinPosition(x * 18, y * 18);
+				emeralds.push_back(new Emerald(&window, coinPosition));
 			}
 		}
 	}
@@ -110,43 +123,14 @@ void Engine::renderScene()
 		ui->displayGameTime(globalClock);
 		window.draw(*player);
 
-		for (Enemy* enemy : enemies) {
-			enemy->update();
-			enemy->draw();
-
-			Vector2f enemyPosition = enemy->getSprite().getPosition();
-			Vector2f playerPosition = player->getPosition();
-
-
-			if (checkCollision(playerPosition, enemyPosition, 25)) {
-				player->decreaseHealth(1, &globalClock);
-				player->hit();
-				ui->setHealth(player->getHealth());
-			}
-		}
-
-		for (auto it = coins.begin(); it != coins.end();) {
-			Coin* coin = *it;
-			coin->update();
-			coin->draw();
-
-			if (checkCollision(player->getPosition(), coin->getPosition(), 20)) {
-				ui->addScores(1);
-				delete coin;
-				it = coins.erase(it); 
-			}
-			else {
-				++it;
-			}
-		}
-
+		updateEnemy();
+		updateCoins();
+		updateEmeralds();
 
 		player->update(deltaTime.asSeconds());
 
 		ui->draw();
 		ui->update(deltaTime.asSeconds(), player->getPosition());
-
-
 
 		gameView.setCenter(player->getPosition());
 		window.setView(gameView);
@@ -159,6 +143,56 @@ void Engine::renderScene()
 	}
 	
 	window.display();
+}
+
+void Engine::updateEnemy()
+{
+	for (Enemy* enemy : enemies) {
+		enemy->update();
+		enemy->draw();
+
+		if (checkCollision(player->getPosition(), enemy->getSprite().getPosition(), 25)) {
+			player->decreaseHealth(1, &globalClock);
+			player->hit();
+			ui->setHealth(player->getHealth());
+		}
+	}
+}
+
+void Engine::updateCoins()
+{
+	for (auto it = coins.begin(); it != coins.end();) {
+		Coin* coin = *it;
+		coin->update();
+		coin->draw();
+
+		if (checkCollision(player->getPosition(), coin->getPosition(), 20)) {
+			ui->addScores(1);
+			delete coin;
+			it = coins.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
+}
+
+void Engine::updateEmeralds()
+{
+	for (auto it = emeralds.begin(); it != emeralds.end();) {
+		Emerald* emerald = *it;
+		emerald->update();
+		emerald->draw();
+
+		if (checkCollision(player->getPosition(), emerald->getPosition(), 20)) {
+			ui->addScores(10);
+			delete emerald;
+			it = emeralds.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
 }
 
 void Engine::setFramesPerSecond(unsigned int fps)

@@ -12,6 +12,7 @@
 #include "Enemy.h"
 #include "GameUI.h"
 #include "Coin.h"
+#include "Emerald.h"
 
 using namespace sf;
 using namespace std;
@@ -26,6 +27,7 @@ private:
 	Player* player;
 	vector<Enemy*> enemies;
 	vector<Coin*> coins;
+	vector<Emerald*> emeralds;
 	Color backgroundColor;
 	View gameView;
 	View menuView;
@@ -38,6 +40,11 @@ private:
 	void initPlayer(TileMap* tileMap);
 	void initEnemy(vector<vector<int>> levelData);
 	void initCoins(vector<vector<int>> levelData);
+	void initEmeralds(vector<vector<int>> levelData);
+	void updateEnemy();
+	void updateCoins();
+	void updateEmeralds();
+
 public:
 	Engine(unsigned int width, unsigned int height, string title, int style);
 	void run();

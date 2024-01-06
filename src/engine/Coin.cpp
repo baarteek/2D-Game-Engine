@@ -23,6 +23,7 @@ void Coin::draw()
 
 void Coin::setPos(sf::Vector2f position)
 {
+    this->position = position;
     sprites[0].setPosition(position);
 }
 
