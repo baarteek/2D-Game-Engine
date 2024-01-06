@@ -54,7 +54,7 @@ public:
 	void setHealth(int helath);
 	int getHealth();
 	void decreaseHealth(int amount, Clock* clock);
-	Sprite getSprite();
+	Sprite& getSprite();
 	bool canBeHit(Clock* clock);
 	void hit();
 	void setClock(Clock* clock);

@@ -12,7 +12,7 @@ Engine::Engine(unsigned int width, unsigned int height, string title, int style)
 	initPlayer(map);
 	menu = new Menu(width, height, 40, "assets/menu/backgroundMenu.png");
 	menu->inMenuMode = false;
-	ui = new GameUI(player->getHealth());
+	ui = new GameUI(&window, player->getHealth(), 0);
 }
 
 void Engine::initMap(string mapPath)
@@ -94,7 +94,7 @@ void Engine::renderScene()
 	if (!menu->inMenuMode) {
 		setBackgroundColor(47, 145, 250);
 		window.draw(*map);
-		ui->displayGameTime(window, globalClock);
+		ui->displayGameTime(globalClock);
 		window.draw(*player);
 
 		for (Enemy* enemy : enemies) {
@@ -105,7 +105,7 @@ void Engine::renderScene()
 			Vector2f playerPosition = player->getPosition();
 
 
-			if (checkCollision(playerPosition, enemyPosition, 18)) {
+			if (checkCollision(playerPosition, enemyPosition, 25)) {
 				player->decreaseHealth(1, &globalClock);
 				player->hit();
 				ui->setHealth(player->getHealth());
@@ -114,7 +114,7 @@ void Engine::renderScene()
 
 		player->update(deltaTime.asSeconds());
 
-		ui->draw(window);
+		ui->draw();
 		ui->update(deltaTime.asSeconds(), player->getPosition());
 
 

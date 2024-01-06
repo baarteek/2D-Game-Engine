@@ -11,6 +11,7 @@
 #include "LineSegment.h"
 #include "Enemy.h"
 #include "GameUI.h"
+#include "Coin.h"
 
 using namespace sf;
 using namespace std;

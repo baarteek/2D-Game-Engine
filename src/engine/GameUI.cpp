@@ -1,20 +1,37 @@
 #include "GameUI.h"
 
 
-GameUI::GameUI(int playerhealth)
+GameUI::GameUI(sf::RenderWindow* window, int playerhealth, int scores)
 {
+    this->window = window;
     this->playerHealth = playerhealth;
+    this->scores = scores;
     uiOffset.x = -400;
     uiOffset.y = -300;
+    coin = new Coin(window);
+    coin->scale(1.5, 1.5);
 
-	if (!font.loadFromFile("assets/font/font.ttf")) {
-		std::cerr << "Error loading game ui font" << std::endl;
-	}
+    setText();
+    setHealthSprites();
+    updateHealthSprite();
+    updateScores();
+}
 
+void GameUI::setText()
+{
+    if (!font.loadFromFile("assets/font/font.ttf")) {
+        std::cerr << "Error loading game ui font" << std::endl;
+    }
     timeText.setFont(font);
     timeText.setCharacterSize(24);
-    timeText.setFillColor(sf::Color(34, 38, 54));
+    timeText.setFillColor(sf::Color(135, 22, 0));
+    scoresText.setFont(font);
+    scoresText.setCharacterSize(28);
+    scoresText.setFillColor(sf::Color(135, 22, 0));
+}
 
+void GameUI::setHealthSprites()
+{
     sf::Texture fullHealthTexture;
     sf::Texture halfHealthTexture;
     sf::Texture lowHealthTexture;
@@ -36,14 +53,29 @@ GameUI::GameUI(int playerhealth)
         sprite.scale(2.25, 2.25);
         healthSprites.push_back(sprite);
     }
-
-    updateHealthSprite();
 }
 
 void GameUI::setHealth(int health)
 {
 	this->playerHealth = health;
     updateHealthSprite();
+}
+
+int GameUI::getScores()
+{
+    return scores;
+}
+
+void GameUI::setScores(int score)
+{
+    this->scores = score;
+    updateScores();
+}
+
+void GameUI::addScores(int scores)
+{
+    this->scores += scores;
+    updateScores();
 }
 
 void GameUI::update(float deltaTime, sf::Vector2f playerPosition)
@@ -54,12 +86,30 @@ void GameUI::update(float deltaTime, sf::Vector2f playerPosition)
         sprite.setPosition(uiPosition.x + (sprite.getGlobalBounds().width + 10) * (&sprite - &healthSprites[0]), uiPosition.y);
     }
     timeText.setPosition(uiPosition.x - uiOffset.x * 1.6, uiPosition.y);
+    scoresText.setPosition(uiPosition.x - uiOffset.x + 20, uiPosition.y);
+    setScoresDisplay(uiPosition);
 }
 
-void GameUI::draw(sf::RenderWindow& window)
+void GameUI::setScoresDisplay(sf::Vector2f uiPosition)
+{
+    coin->draw();
+    coin->update();
+    sf::Vector2f coinPosition(uiPosition.x - uiOffset.x - 15, uiPosition.y + 5);
+    coin->setPos(coinPosition);
+}
+
+void GameUI::updateScores()
+{
+    std::stringstream ss;
+    ss << scores;
+    scoresText.setString(ss.str());
+}
+
+
+void GameUI::draw()
 {
     for (auto& sprite : healthSprites) {
-        window.draw(sprite); 
+        window->draw(sprite); 
     }
 }
 
@@ -79,7 +129,8 @@ void GameUI::updateHealthSprite()
     }
 }
 
-void GameUI::displayGameTime(sf::RenderWindow& window, sf::Clock clock)
+
+void GameUI::displayGameTime(sf::Clock clock)
 {
     float time = clock.getElapsedTime().asSeconds();
     int minutes = static_cast<int>(time / 60);
@@ -91,6 +142,7 @@ void GameUI::displayGameTime(sf::RenderWindow& window, sf::Clock clock)
 
     timeText.setString("Time: " + ss.str());
 
-    window.draw(timeText);
+    window->draw(timeText);
+    window->draw(scoresText);
 }
 

@@ -63,6 +63,7 @@ void Player::update(float deltaTime)
     int tileX = static_cast<int>((playerX + playerSprite->getTexture()->getSize().x / 2) / tileSize);
     int tileY = static_cast<int>((playerY + playerSprite->getTexture()->getSize().y) / tileSize);
 
+
     int currentTileValue = tileMap->getTileValue(tileX, tileY);
 
     handleInput();
@@ -198,10 +199,10 @@ void Player::decreaseHealth(int amount, Clock* clock)
 }
 
 
-Sprite Player::getSprite()
-{
-    return playerSprites[0];
+Sprite& Player::getSprite() {
+    return *playerSprite; 
 }
+
 
 bool Player::canBeHit(Clock* clock)
 {

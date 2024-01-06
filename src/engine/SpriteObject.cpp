@@ -4,7 +4,7 @@
 SpriteObject::SpriteObject()
 {
     currentFrame = 0;
-    frameDuration = 10;
+    frameDuration = 8;
     elapsedTime = 0;
 }
 
