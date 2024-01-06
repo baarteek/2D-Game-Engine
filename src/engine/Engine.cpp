@@ -11,6 +11,7 @@ Engine::Engine(unsigned int width, unsigned int height, string title, int style)
 	initPlayer(map);
 	menu = new Menu(width, height, 40, "assets/menu/backgroundMenu.png");
 	menu->inMenuMode = false;
+	ui = new GameUI();
 }
 
 void Engine::initMap(string mapPath)
@@ -91,12 +92,16 @@ void Engine::renderScene()
 		setBackgroundColor(47, 145, 250);
 		window.draw(*map);
 		window.draw(*player);
-		player->update(deltaTime.asSeconds());
 
 		for (Enemy* enemy : enemies) {
 			enemy->update();
 			enemy->draw();
 		}
+
+		player->update(deltaTime.asSeconds());
+
+		ui->draw(window);
+		ui->update(deltaTime.asSeconds(), player->getPosition());
 
 		gameView.setCenter(player->getPosition());
 		window.setView(gameView);

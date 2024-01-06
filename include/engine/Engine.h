@@ -10,6 +10,7 @@
 #include "Point2D.h"
 #include "LineSegment.h"
 #include "Enemy.h"
+#include "GameUI.h"
 
 using namespace sf;
 using namespace std;
@@ -26,6 +27,7 @@ private:
 	View gameView;
 	View menuView;
 	Menu *menu;
+	GameUI* ui;
 
 	void handleEvent();
 	void renderScene();

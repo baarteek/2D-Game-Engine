@@ -10,6 +10,7 @@
 #include "SpriteObject.h"
 #include "TileMap.h"
 
+
 class Enemy : public SpriteObject {
 public:
     Enemy(sf::RenderWindow* widnow, const sf::Vector2f& position, TileMap& tileMap, int speed, int helath);
