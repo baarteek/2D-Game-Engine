@@ -18,13 +18,16 @@ public:
     void draw();
     void setSpeed(int speed);
     void setHealth(int health);
+    Sprite getSprite();
+    sf::Vector2f getPosition();
+   
 
 private:
     sf::RenderWindow* widnow;
     sf::Texture texture;
     sf::Vector2f position;
-    sf::Sprite sprite;
     TileMap& tileMap;
+    sf::Sprite sprite;
     float speed;
     int health;
     bool movingLeft = true;

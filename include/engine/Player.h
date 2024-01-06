@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "TileMap.h"
+#include "Enemy.h"
 
 using namespace sf;
 using namespace std;
@@ -21,9 +22,12 @@ private:
 	float playerY;
 	float playerSpeed;
 	float jumpStrength;
+	int health;
 	Clock animationClock;
 	Time frameDuration = seconds(0.1f);
 	int direction = 1;
+	float lastHitTime;
+	float hitCooldown;
 
 	virtual void draw(RenderTarget& target, RenderStates states) const;
 
@@ -43,4 +47,8 @@ public:
 	Vector2f getPosition();
 	bool isOnCollisionTile(int currentTileValue);
 	void handleCollisions();
+	void setHealth(int helath);
+	int getHealth();
+	void decreaseHealth(int damage);
+	Sprite getSprite();
 };

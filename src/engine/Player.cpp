@@ -19,6 +19,7 @@ void Player::draw(RenderTarget& target, RenderStates states) const
 
 Player::Player()
 {
+
 	if (!playerTexture1.loadFromFile("assets/player/player1.png") || !playerTexture2.loadFromFile("assets/player/player2.png")) {
 		cerr << "Error loading player texture" << endl;
 	}
@@ -164,6 +165,26 @@ void Player::handleCollisions()
             setPosition(newX, playerY);
         }
     }
+}
+
+void Player::setHealth(int helath)
+{
+    this->health = helath;
+}
+
+int Player::getHealth()
+{
+    return health;
+}
+
+void Player::decreaseHealth(int damage)
+{
+    health -= damage;
+}
+
+Sprite Player::getSprite()
+{
+    return playerSprites[0];
 }
 
 void Player::setPlayerSpeed(float speed)

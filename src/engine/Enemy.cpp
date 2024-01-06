@@ -113,6 +113,16 @@ void Enemy::flip() {
     sprites[0].setPosition(originalPosition.x, originalPosition.y);
 }
 
+Sprite Enemy::getSprite()
+{
+    return sprites[0];
+}
+
+sf::Vector2f Enemy::getPosition()
+{
+    return position;
+}
+
 
 void Enemy::update()
 {
@@ -120,7 +130,7 @@ void Enemy::update()
         movingLeft = !movingLeft;
         flip();
     }
-
+    
     float moveX = movingLeft ? -speed : speed;
     sprites[0].move(moveX, 0);
     animate();

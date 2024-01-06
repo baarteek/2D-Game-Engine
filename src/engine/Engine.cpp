@@ -3,6 +3,7 @@
 Engine::Engine(unsigned int width, unsigned int height, string title, int style)
 {
 	window.create(VideoMode(width, height), title, style);
+	globalClock.restart();
 	gameView.setSize(width, height);
 	menuView.setSize(width, height);
 	menuView.setCenter(width / 2, height / 2);
@@ -11,7 +12,7 @@ Engine::Engine(unsigned int width, unsigned int height, string title, int style)
 	initPlayer(map);
 	menu = new Menu(width, height, 40, "assets/menu/backgroundMenu.png");
 	menu->inMenuMode = false;
-	ui = new GameUI();
+	ui = new GameUI(player->getHealth());
 }
 
 void Engine::initMap(string mapPath)
@@ -36,6 +37,7 @@ void Engine::initPlayer(TileMap* tileMap)
 	player->setVelocity(Vector2f(0, 150));
 	player->setJumpStrenght(200);
 	player->setPlayerSpeed(150);
+	player->setHealth(6);
 }
 
 void Engine::initEnemy(vector<vector<int>> levelData)
@@ -91,17 +93,29 @@ void Engine::renderScene()
 	if (!menu->inMenuMode) {
 		setBackgroundColor(47, 145, 250);
 		window.draw(*map);
+		ui->displayGameTime(window, globalClock);
 		window.draw(*player);
 
 		for (Enemy* enemy : enemies) {
 			enemy->update();
 			enemy->draw();
+
+			Vector2f enemyPosition = enemy->getSprite().getPosition();
+			Vector2f playerPosition = player->getPosition();
+
+
+			if (checkCollision(playerPosition, enemyPosition, 18)) {
+				player->decreaseHealth(1);
+				ui->setHealth(player->getHealth());
+			}
 		}
 
 		player->update(deltaTime.asSeconds());
 
 		ui->draw(window);
 		ui->update(deltaTime.asSeconds(), player->getPosition());
+
+
 
 		gameView.setCenter(player->getPosition());
 		window.setView(gameView);
@@ -137,5 +151,14 @@ void Engine::setBackgroundColor(int red, int green, int blue)
 	backgroundColor.g = green;
 	backgroundColor.b = blue;
 }
+
+bool Engine::checkCollision(const sf::Vector2f& position1, const sf::Vector2f& position2, float minDistance) {
+	float dx = position1.x - position2.x;
+	float dy = position1.y - position2.y;
+	float distance = std::sqrt(dx * dx + dy * dy);
+
+	return distance < minDistance;
+}
+
 
 

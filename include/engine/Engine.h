@@ -19,6 +19,7 @@ class Engine {
 private:
 	RenderWindow window;
 	Clock clock;
+	Clock globalClock;
 	Time deltaTime;
 	TileMap* map;
 	Player* player;
@@ -41,4 +42,6 @@ public:
 	void setVerticalSync(bool enable);
 	void handleError(string& message);
 	void setBackgroundColor(int red, int green, int blue);
+	bool checkCollision(const sf::Vector2f& position1, const sf::Vector2f& position2, float minDistance);
+
 };

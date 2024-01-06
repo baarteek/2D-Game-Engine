@@ -1,15 +1,19 @@
 #include "GameUI.h"
 
 
-GameUI::GameUI()
+GameUI::GameUI(int playerhealth)
 {
-    playerHealth = 6;
+    this->playerHealth = playerhealth;
     uiOffset.x = -400;
     uiOffset.y = -300;
 
 	if (!font.loadFromFile("assets/font/font.ttf")) {
 		std::cerr << "Error loading game ui font" << std::endl;
 	}
+
+    timeText.setFont(font);
+    timeText.setCharacterSize(24);
+    timeText.setFillColor(sf::Color(195, 199, 197));
 
     sf::Texture fullHealthTexture;
     sf::Texture halfHealthTexture;
@@ -49,6 +53,7 @@ void GameUI::update(float deltaTime, sf::Vector2f playerPosition)
     for (auto& sprite : healthSprites) {
         sprite.setPosition(uiPosition.x + (sprite.getGlobalBounds().width + 10) * (&sprite - &healthSprites[0]), uiPosition.y);
     }
+    timeText.setPosition(uiPosition.x - uiOffset.x * 1.6, uiPosition.y);
 }
 
 void GameUI::draw(sf::RenderWindow& window)
@@ -73,3 +78,19 @@ void GameUI::updateHealthSprite()
         }
     }
 }
+
+void GameUI::displayGameTime(sf::RenderWindow& window, sf::Clock clock)
+{
+    float time = clock.getElapsedTime().asSeconds();
+    int minutes = static_cast<int>(time / 60);
+    int seconds = static_cast<int>(time) % 60;
+
+    std::stringstream ss;
+    ss << std::setw(2) << std::setfill('0') << minutes << ":"
+        << std::setw(2) << std::setfill('0') << seconds;
+
+    timeText.setString("Time: " + ss.str());
+
+    window.draw(timeText);
+}
+
