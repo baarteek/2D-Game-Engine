@@ -105,7 +105,7 @@ void Engine::renderScene()
 
 
 			if (checkCollision(playerPosition, enemyPosition, 18)) {
-				player->decreaseHealth(1);
+				player->decreaseHealth(1, &globalClock);
 				ui->setHealth(player->getHealth());
 			}
 		}

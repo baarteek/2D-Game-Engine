@@ -17,7 +17,7 @@ void Player::draw(RenderTarget& target, RenderStates states) const
     target.draw(*playerSprite, states);
 }
 
-Player::Player()
+Player::Player() : lastHitTime(-1.0f)
 {
 
 	if (!playerTexture1.loadFromFile("assets/player/player1.png") || !playerTexture2.loadFromFile("assets/player/player2.png")) {
@@ -177,14 +177,24 @@ int Player::getHealth()
     return health;
 }
 
-void Player::decreaseHealth(int damage)
+void Player::decreaseHealth(int amount, Clock* clock)
 {
-    health -= damage;
+    if (canBeHit(clock)) {
+        health -= amount;
+        lastHitTime = clock->getElapsedTime().asSeconds();
+    }
 }
+
 
 Sprite Player::getSprite()
 {
     return playerSprites[0];
+}
+
+bool Player::canBeHit(Clock* clock)
+{
+    float currentTime = clock->getElapsedTime().asSeconds();
+    return currentTime - lastHitTime >= 1.0f;
 }
 
 void Player::setPlayerSpeed(float speed)

@@ -27,7 +27,6 @@ private:
 	Time frameDuration = seconds(0.1f);
 	int direction = 1;
 	float lastHitTime;
-	float hitCooldown;
 
 	virtual void draw(RenderTarget& target, RenderStates states) const;
 
@@ -49,6 +48,7 @@ public:
 	void handleCollisions();
 	void setHealth(int helath);
 	int getHealth();
-	void decreaseHealth(int damage);
+	void decreaseHealth(int amount, Clock* clock);
 	Sprite getSprite();
+	bool canBeHit(Clock* clock);
 };

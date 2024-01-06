@@ -13,7 +13,7 @@ GameUI::GameUI(int playerhealth)
 
     timeText.setFont(font);
     timeText.setCharacterSize(24);
-    timeText.setFillColor(sf::Color(195, 199, 197));
+    timeText.setFillColor(sf::Color(34, 38, 54));
 
     sf::Texture fullHealthTexture;
     sf::Texture halfHealthTexture;
