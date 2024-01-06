@@ -31,6 +31,7 @@ private:
 	void renderScene();
 	void initMap(string mapPath);
 	void initPlayer(TileMap* tileMap);
+	void initEnemy(vector<vector<int>> levelData);
 public:
 	Engine(unsigned int width, unsigned int height, string title, int style);
 	void run();

@@ -22,14 +22,8 @@ void Engine::initMap(string mapPath)
 		map->setGravity(500);
 		vector<int> collisionTilesID = { 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24, 25, 26, 41, 42, 43, 44, 61, 62, 63, 64, 81, 82, 83, 84, 101, 102, 103, 104, 121, 122, 123, 124, 141, 142, 143, 144};
 		map->setCollisonTilesID(collisionTilesID);
-		for (int y = 0; y < levelData.size(); y++) {
-			for (int x = 0; x < levelData[y].size(); x++) {
-				if (levelData[y][x] == 199) {  
-					sf::Vector2f enemyPosition(x * 18, y * 18);
-					enemies.push_back(new Enemy(&window, enemyPosition, 1, 1));
-				}
-			}
-		}
+
+		initEnemy(levelData);
 	}
 }
 
@@ -41,6 +35,18 @@ void Engine::initPlayer(TileMap* tileMap)
 	player->setVelocity(Vector2f(0, 150));
 	player->setJumpStrenght(200);
 	player->setPlayerSpeed(150);
+}
+
+void Engine::initEnemy(vector<vector<int>> levelData)
+{
+	for (int y = 0; y < levelData.size(); y++) {
+		for (int x = 0; x < levelData[y].size(); x++) {
+			if (levelData[y][x] == 199) {
+				sf::Vector2f enemyPosition(x * 18, y * 18);
+				enemies.push_back(new Enemy(&window, enemyPosition, *map, 1, 1));
+			}
+		}
+	}
 }
 
 void Engine::run()

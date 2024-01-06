@@ -15,11 +15,14 @@ private:
     Texture m_tileset;
     vector<vector<int>> tiles;
     float gravity;
-    vector<int> collisionTiles;
+    
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 public:
+    vector<int> collisionTiles;
+    Vector2u tileSize;
+
     bool load(const string& tileset, Vector2u tileSize, const vector<vector<int>>& tiles);
     const vector<vector<int>>& getTiles() const;
     int getTileValue(unsigned int x, unsigned int y) const;

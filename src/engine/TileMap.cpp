@@ -10,6 +10,8 @@ void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 bool TileMap::load(const string& tileset, sf::Vector2u tileSize, const vector<vector<int>>& tiles)
 {
+    this->tileSize = tileSize;
+
     if (!m_tileset.loadFromFile(tileset))
         return false;
 
