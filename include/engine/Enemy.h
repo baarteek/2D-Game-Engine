@@ -5,6 +5,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <vector>
+#include <random>
 #include "SpriteObject.h"
 #include "TileMap.h"
 

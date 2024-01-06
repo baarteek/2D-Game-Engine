@@ -24,7 +24,15 @@ void Enemy::loadFrames()
 
         int tilesPerRow = 9;
 
-        for (int i = 18; i <= 20; ++i) {
+        std::vector<int> numbers = { 15, 18, 21, 24 };
+
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> distrib(0, numbers.size() - 1);
+
+        int selected_number = numbers[distrib(gen)];
+
+        for (int i = selected_number; i <= selected_number + 2; ++i) {
             int x = (i % tilesPerRow) * (frameWidth + spacing);
             int y = (i / tilesPerRow) * (frameHeight + spacing);
 
