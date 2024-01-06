@@ -45,11 +45,13 @@ void Engine::initPlayer(TileMap* tileMap)
 
 void Engine::initEnemy(vector<vector<int>> levelData)
 {
+	srand(time(NULL));
 	for (int y = 0; y < levelData.size(); y++) {
 		for (int x = 0; x < levelData[y].size(); x++) {
 			if (levelData[y][x] == 199) {
 				sf::Vector2f enemyPosition(x * 18, y * 18);
-				enemies.push_back(new Enemy(&window, enemyPosition, *map, 1, 1));
+				int enemySpeed = rand() % 3 + 1;
+				enemies.push_back(new Enemy(&window, enemyPosition, *map, enemySpeed, 1));
 			}
 		}
 	}

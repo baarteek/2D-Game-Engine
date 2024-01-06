@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <stdlib.h>
+#include <time.h>
 
 #include "TileMap.h"
 #include "Player.h"
