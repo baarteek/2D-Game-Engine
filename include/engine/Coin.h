@@ -4,7 +4,7 @@
 
 class Coin : public SpriteObject {
 public:
-	Coin(sf::RenderWindow* widnow);
+	Coin(sf::RenderWindow* widnow, sf::Vector2f position);
 	void update() override;
 	void draw();
 	void setPos(sf::Vector2f position);

@@ -8,7 +8,7 @@ GameUI::GameUI(sf::RenderWindow* window, int playerhealth, int scores)
     this->scores = scores;
     uiOffset.x = -400;
     uiOffset.y = -300;
-    coin = new Coin(window);
+    coin = new Coin(window, sf::Vector2f(0 ,0));
     coin->scale(1.5, 1.5);
 
     setText();

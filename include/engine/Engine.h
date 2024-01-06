@@ -25,6 +25,7 @@ private:
 	TileMap* map;
 	Player* player;
 	vector<Enemy*> enemies;
+	vector<Coin*> coins;
 	Color backgroundColor;
 	View gameView;
 	View menuView;
@@ -36,6 +37,7 @@ private:
 	void initMap(string mapPath);
 	void initPlayer(TileMap* tileMap);
 	void initEnemy(vector<vector<int>> levelData);
+	void initCoins(vector<vector<int>> levelData);
 public:
 	Engine(unsigned int width, unsigned int height, string title, int style);
 	void run();

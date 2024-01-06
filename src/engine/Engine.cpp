@@ -26,6 +26,7 @@ void Engine::initMap(string mapPath)
 		map->setCollisonTilesID(collisionTilesID);
 
 		initEnemy(levelData);
+		initCoins(levelData);
 	}
 }
 
@@ -48,6 +49,18 @@ void Engine::initEnemy(vector<vector<int>> levelData)
 			if (levelData[y][x] == 199) {
 				sf::Vector2f enemyPosition(x * 18, y * 18);
 				enemies.push_back(new Enemy(&window, enemyPosition, *map, 1, 1));
+			}
+		}
+	}
+}
+
+void Engine::initCoins(vector<vector<int>> levelData)
+{
+	for (int y = 0; y < levelData.size(); y++) {
+		for (int x = 0; x < levelData[y].size(); x++) {
+			if (levelData[y][x] == 152) {
+				sf::Vector2f coinPosition(x * 18, y * 18);
+				coins.push_back(new Coin(&window, coinPosition));
 			}
 		}
 	}
@@ -110,6 +123,11 @@ void Engine::renderScene()
 				player->hit();
 				ui->setHealth(player->getHealth());
 			}
+		}
+
+		for (Coin* coin : coins) {
+			coin->update();
+			coin->draw();
 		}
 
 		player->update(deltaTime.asSeconds());

@@ -1,10 +1,12 @@
 #include "Coin.h"
 
 
-Coin::Coin(sf::RenderWindow* widnow)
+Coin::Coin(sf::RenderWindow* widnow, sf::Vector2f position)
 {
     this->widnow = widnow;
+    this->position = position;
     loadFrames();
+    setPos(position);
 }
 
 void Coin::update()
