@@ -125,10 +125,21 @@ void Engine::renderScene()
 			}
 		}
 
-		for (Coin* coin : coins) {
+		for (auto it = coins.begin(); it != coins.end();) {
+			Coin* coin = *it;
 			coin->update();
 			coin->draw();
+
+			if (checkCollision(player->getPosition(), coin->getPosition(), 20)) {
+				ui->addScores(1);
+				delete coin;
+				it = coins.erase(it); 
+			}
+			else {
+				++it;
+			}
 		}
+
 
 		player->update(deltaTime.asSeconds());
 

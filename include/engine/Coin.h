@@ -9,6 +9,7 @@ public:
 	void draw();
 	void setPos(sf::Vector2f position);
 	void scale(float scaleX, float scaleY);
+	sf::Vector2f getPosition();
 
 private:
 	sf::RenderWindow* widnow;

@@ -31,6 +31,12 @@ void Coin::scale(float scaleX, float scaleY)
     sprites[0].scale(scaleX, scaleY);
 }
 
+sf::Vector2f Coin::getPosition()
+{
+    return sprites[0].getPosition();
+}
+
+
 void Coin::loadFrames()
 {
 	if (texture.loadFromFile("assets/objects/coins.png")) {
