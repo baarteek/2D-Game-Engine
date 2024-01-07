@@ -19,6 +19,8 @@ public:
     void displayGameTime(sf::Clock clock);
     void displaySpeedPotionEffect();
     void activatePotion(float duration);
+    void displayJumpPotionEffect();
+    void activateJumpPotion(float duration);
 
 private:
     sf::RenderWindow* window;
@@ -30,8 +32,11 @@ private:
     Coin* coin;
     sf::Vector2f uiOffset;
     sf::Text potionTimerText;
+    sf::Text potionJumpTimerText;
     sf::Clock potionClock;
+    sf::Clock jumpPotionClock;
     bool isPotionActive = false;
+    bool isJumpPotionActive = false;
     int playerHealth;
     int scores;
 

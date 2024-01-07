@@ -263,7 +263,7 @@ void Engine::updatePotions()
 
 		if (checkCollision(player->getPosition(), jumpPotion->getPosition(), 20)) {
 			player->applyJumpBoost(10, 300);
-			ui->activatePotion(10);
+			ui->activateJumpPotion(10);
 			delete jumpPotion;
 			it = jumpPotions.erase(it);
 		}

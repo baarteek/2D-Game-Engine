@@ -30,8 +30,10 @@ void GameUI::setText()
     scoresText.setFillColor(sf::Color(135, 22, 0));
     potionTimerText.setFont(font);
     potionTimerText.setCharacterSize(24);
-    potionTimerText.setFillColor(sf::Color(16, 75, 30));
-    potionTimerText.setPosition(200, 50);
+    potionTimerText.setFillColor(sf::Color(16, 75, 30)); 
+    potionJumpTimerText.setFont(font);
+    potionJumpTimerText.setCharacterSize(24);
+    potionJumpTimerText.setFillColor(sf::Color(202, 181, 72));
 }
 
 void GameUI::setHealthSprites()
@@ -95,6 +97,15 @@ void GameUI::update(float deltaTime, sf::Vector2f playerPosition)
 
     potionTimerText.setPosition(uiPosition.x + 5, uiPosition.y - uiOffset.y / 6);
     displaySpeedPotionEffect();
+
+    if (isPotionActive) {
+        potionJumpTimerText.setPosition(uiPosition.x + 5, uiPosition.y - uiOffset.y / 6 + 40);
+    }
+    else {
+        potionJumpTimerText.setPosition(uiPosition.x + 5, uiPosition.y - uiOffset.y / 6);
+    }
+    
+    displayJumpPotionEffect();
 }
 
 void GameUI::setScoresDisplay(sf::Vector2f uiPosition)
@@ -120,6 +131,9 @@ void GameUI::draw()
     }
     if (isPotionActive) {
         window->draw(potionTimerText);
+    }
+    if (isJumpPotionActive) {
+        window->draw(potionJumpTimerText);
     }
 }
 
@@ -173,6 +187,31 @@ void GameUI::displaySpeedPotionEffect()
 
         potionTimerText.setString(ss.str());
     }
+}
+
+void GameUI::displayJumpPotionEffect()
+{
+    if (isJumpPotionActive) {
+        float timeLeft = 10.0f - jumpPotionClock.getElapsedTime().asSeconds();
+        if (timeLeft <= 0) {
+            isJumpPotionActive = false;
+            potionJumpTimerText.setString("");
+            return;
+        }
+
+        int secondsLeft = static_cast<int>(timeLeft);
+
+        std::stringstream ss;
+        ss << "Jump Boost: " << std::setw(2) << std::setfill('0') << secondsLeft;
+
+        potionJumpTimerText.setString(ss.str());
+    }
+}
+
+void GameUI::activateJumpPotion(float duration)
+{
+    jumpPotionClock.restart();
+    isJumpPotionActive = true;
 }
 
 void GameUI::activatePotion(float duration)
