@@ -15,6 +15,7 @@
 #include "GameUI.h"
 #include "Coin.h"
 #include "Emerald.h"
+#include "HealthPotion.h"
 
 using namespace sf;
 using namespace std;
@@ -30,6 +31,7 @@ private:
 	vector<Enemy*> enemies;
 	vector<Coin*> coins;
 	vector<Emerald*> emeralds;
+	vector<HealthPotion*> healthPotions;
 	Color backgroundColor;
 	View gameView;
 	View menuView;
@@ -43,9 +45,11 @@ private:
 	void initEnemy(vector<vector<int>> levelData);
 	void initCoins(vector<vector<int>> levelData);
 	void initEmeralds(vector<vector<int>> levelData);
+	void initPotions(vector<vector<int>> levelData);
 	void updateEnemy();
 	void updateCoins();
 	void updateEmeralds();
+	void updatePotions();
 
 public:
 	Engine(unsigned int width, unsigned int height, string title, int style);

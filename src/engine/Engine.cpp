@@ -28,6 +28,7 @@ void Engine::initMap(string mapPath)
 		initEnemy(levelData);
 		initCoins(levelData);
 		initEmeralds(levelData);
+		initPotions(levelData);
 	}
 }
 
@@ -51,6 +52,7 @@ void Engine::initEnemy(vector<vector<int>> levelData)
 			if (levelData[y][x] == 199) {
 				sf::Vector2f enemyPosition(x * 18, y * 18);
 				int enemySpeed = rand() % 3 + 1;
+				std::cout << enemySpeed << std::endl;
 				enemies.push_back(new Enemy(&window, enemyPosition, *map, enemySpeed, 1));
 			}
 		}
@@ -76,6 +78,18 @@ void Engine::initEmeralds(vector<vector<int>> levelData)
 			if (levelData[y][x] == 153) {
 				sf::Vector2f coinPosition(x * 18, y * 18);
 				emeralds.push_back(new Emerald(&window, coinPosition));
+			}
+		}
+	}
+}
+
+void Engine::initPotions(vector<vector<int>> levelData)
+{
+	for (int y = 0; y < levelData.size(); y++) {
+		for (int x = 0; x < levelData[y].size(); x++) {
+			if (levelData[y][x] == 162) {
+				sf::Vector2f healthPotionsPosition(x * 18, y * 18);
+				healthPotions.push_back(new HealthPotion(&window, healthPotionsPosition));
 			}
 		}
 	}
@@ -128,6 +142,7 @@ void Engine::renderScene()
 		updateEnemy();
 		updateCoins();
 		updateEmeralds();
+		updatePotions();
 
 		player->update(deltaTime.asSeconds());
 
@@ -190,6 +205,27 @@ void Engine::updateEmeralds()
 			ui->addScores(10);
 			delete emerald;
 			it = emeralds.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
+}
+
+void Engine::updatePotions()
+{
+	for (auto it = healthPotions.begin(); it != healthPotions.end();) {
+		HealthPotion* healtpotion = *it;
+		healtpotion->update();
+		healtpotion->draw();
+
+		if (checkCollision(player->getPosition(), healtpotion->getPosition(), 20)) {
+			if (player->getHealth() < 6) {
+				player->setHealth(player->getHealth() + 1);
+				ui->setHealth(player->getHealth());
+			}
+			delete healtpotion;
+			it = healthPotions.erase(it);
 		}
 		else {
 			++it;
