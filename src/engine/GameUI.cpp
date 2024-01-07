@@ -28,6 +28,10 @@ void GameUI::setText()
     scoresText.setFont(font);
     scoresText.setCharacterSize(28);
     scoresText.setFillColor(sf::Color(135, 22, 0));
+    potionTimerText.setFont(font);
+    potionTimerText.setCharacterSize(24);
+    potionTimerText.setFillColor(sf::Color(16, 75, 30));
+    potionTimerText.setPosition(200, 50);
 }
 
 void GameUI::setHealthSprites()
@@ -88,6 +92,9 @@ void GameUI::update(float deltaTime, sf::Vector2f playerPosition)
     timeText.setPosition(uiPosition.x - uiOffset.x * 1.6, uiPosition.y);
     scoresText.setPosition(uiPosition.x - uiOffset.x + 20, uiPosition.y);
     setScoresDisplay(uiPosition);
+
+    potionTimerText.setPosition(uiPosition.x + 5, uiPosition.y - uiOffset.y / 6);
+    displaySpeedPotionEffect();
 }
 
 void GameUI::setScoresDisplay(sf::Vector2f uiPosition)
@@ -110,6 +117,9 @@ void GameUI::draw()
 {
     for (auto& sprite : healthSprites) {
         window->draw(sprite); 
+    }
+    if (isPotionActive) {
+        window->draw(potionTimerText);
     }
 }
 
@@ -144,5 +154,30 @@ void GameUI::displayGameTime(sf::Clock clock)
 
     window->draw(timeText);
     window->draw(scoresText);
+}
+
+void GameUI::displaySpeedPotionEffect()
+{
+    if (isPotionActive) {
+        float timeLeft = 10.0f - potionClock.getElapsedTime().asSeconds();
+        if (timeLeft <= 0) {
+            isPotionActive = false;
+            potionTimerText.setString("");
+            return;
+        }
+
+        int secondsLeft = static_cast<int>(timeLeft);
+
+        std::stringstream ss;
+        ss << "Speed Boost: " << std::setw(2) << std::setfill('0') << secondsLeft;
+
+        potionTimerText.setString(ss.str());
+    }
+}
+
+void GameUI::activatePotion(float duration)
+{
+    potionClock.restart();
+    isPotionActive = true;
 }
 

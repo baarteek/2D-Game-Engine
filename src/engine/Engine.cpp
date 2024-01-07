@@ -242,7 +242,8 @@ void Engine::updatePotions()
 		speedPotion->draw();
 
 		if (checkCollision(player->getPosition(), speedPotion->getPosition(), 20)) {
-			player->applySpeedBoost(10, 200);
+			player->applySpeedBoost(10, 225);
+			ui->activatePotion(10);
 			delete speedPotion;
 			it = speedPotions.erase(it);
 		}

@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iomanip>
 #include "Coin.h"
+#include "Potion.h"
 
 class GameUI {
 public:
@@ -16,6 +17,8 @@ public:
     void update(float deltaTime, sf::Vector2f playerPosition);
     void draw();
     void displayGameTime(sf::Clock clock);
+    void displaySpeedPotionEffect();
+    void activatePotion(float duration);
 
 private:
     sf::RenderWindow* window;
@@ -26,6 +29,9 @@ private:
     std::vector<sf::Sprite> healthSprites;
     Coin* coin;
     sf::Vector2f uiOffset;
+    sf::Text potionTimerText;
+    sf::Clock potionClock;
+    bool isPotionActive = false;
     int playerHealth;
     int scores;
 
