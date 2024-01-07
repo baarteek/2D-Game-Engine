@@ -95,6 +95,10 @@ void Engine::initPotions(vector<vector<int>> levelData)
 				sf::Vector2f speedPotionsPosition(x * 18, y * 18);
 				speedPotions.push_back(new Potion(&window, speedPotionsPosition, "assets/objects/speed_potions.png"));
 			}
+			else if (levelData[y][x] == 164) {
+				sf::Vector2f jumpPotionsPosition(x * 18, y * 18);
+				jumpPotions.push_back(new Potion(&window, jumpPotionsPosition, "assets/objects/jump_potions.png"));
+			}
 		}
 	}
 }
@@ -246,6 +250,22 @@ void Engine::updatePotions()
 			ui->activatePotion(10);
 			delete speedPotion;
 			it = speedPotions.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
+
+	for (auto it = jumpPotions.begin(); it != jumpPotions.end();) {
+		Potion* jumpPotion = *it;
+		jumpPotion->update();
+		jumpPotion->draw();
+
+		if (checkCollision(player->getPosition(), jumpPotion->getPosition(), 20)) {
+			player->applyJumpBoost(10, 300);
+			ui->activatePotion(10);
+			delete jumpPotion;
+			it = jumpPotions.erase(it);
 		}
 		else {
 			++it;

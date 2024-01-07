@@ -27,7 +27,7 @@ bool TileMap::load(const string& tileset, sf::Vector2u tileSize, const vector<ve
         {
             int tileNumber = tiles[j][i] - 1;
 
-            if (tileNumber < 0 || tileNumber == 151 || tileNumber == 152 || tileNumber == 161 || tileNumber == 162) {
+            if (tileNumber < 0 || tileNumber == 151 || tileNumber == 152 || tileNumber == 161 || tileNumber == 162 || tileNumber == 163) {
                 continue;
             }
 

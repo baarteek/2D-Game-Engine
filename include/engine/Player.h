@@ -36,6 +36,10 @@ private:
 	float speedBoostEndTime = 0;
 	float normalSpeed;
 	float boostedSpeed;
+	bool isJumpBoosted = false;
+	float jumpBoostEndTime = 0;
+	float normalJump;
+	float boosterJump;
 
 	virtual void draw(RenderTarget& target, RenderStates states) const;
 
@@ -63,4 +67,5 @@ public:
 	void hit();
 	void setClock(Clock* clock);
 	void applySpeedBoost(float duration, float newSpeed);
+	void applyJumpBoost(float duration, float strength);
 };

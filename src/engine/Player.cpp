@@ -86,10 +86,15 @@ void Player::update(float deltaTime)
             isFlashing = false;
         }
     }
+    if (isJumpBoosted && clock->getElapsedTime().asSeconds() >= jumpBoostEndTime) {
+        setJumpStrenght(normalJump);
+        isJumpBoosted = false;
+    }
     if (isSpeedBoosted && clock->getElapsedTime().asSeconds() >= speedBoostEndTime) {
         playerSpeed = normalSpeed;
         isSpeedBoosted = false;
     }
+
 }
 
 void Player::handleInput()
@@ -235,6 +240,14 @@ void Player::applySpeedBoost(float duration, float newSpeed)
     speedBoostEndTime = clock->getElapsedTime().asSeconds() + duration;
 }
 
+void Player::applyJumpBoost(float duration, float strength)
+{
+    normalJump = jumpStrength;
+    boosterJump = strength;
+    setJumpStrenght(boosterJump);
+    isJumpBoosted = true;
+    jumpBoostEndTime = clock->getElapsedTime().asSeconds() + duration;
+}
 
 void Player::setPlayerSpeed(float speed)
 {

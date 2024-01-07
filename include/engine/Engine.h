@@ -33,6 +33,7 @@ private:
 	vector<Emerald*> emeralds;
 	vector<Potion*> healthPotions;
 	vector<Potion*> speedPotions;
+	vector<Potion*> jumpPotions;
 	Color backgroundColor;
 	View gameView;
 	View menuView;
