@@ -2,14 +2,15 @@
 
 #include "SpriteObject.h"
 
-class HealthPotion : public SpriteObject {
+class Potion : public SpriteObject {
 public:
-	HealthPotion(sf::RenderWindow* window, sf::Vector2f position);
+	Potion(sf::RenderWindow* window, sf::Vector2f position, std::string path);
 	void update() override;
 	void draw();
 	void setPos(sf::Vector2f position);
 	void scale(float scaleX, float scaleY);
 	sf::Vector2f getPosition();
+	
 
 private:
 	sf::RenderWindow* window;
@@ -17,5 +18,5 @@ private:
 	sf::Vector2f position;
 	sf::Sprite sprite;
 
-	void loadFrames();
+	void loadFrames(std::string path);
 };

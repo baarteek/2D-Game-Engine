@@ -86,6 +86,10 @@ void Player::update(float deltaTime)
             isFlashing = false;
         }
     }
+    if (isSpeedBoosted && clock->getElapsedTime().asSeconds() >= speedBoostEndTime) {
+        playerSpeed = normalSpeed;
+        isSpeedBoosted = false;
+    }
 }
 
 void Player::handleInput()
@@ -220,6 +224,15 @@ void Player::hit() {
 void Player::setClock(Clock* clock)
 {
     this->clock = clock;
+}
+
+void Player::applySpeedBoost(float duration, float newSpeed)
+{
+    normalSpeed = playerSpeed;
+    boostedSpeed = newSpeed;
+    playerSpeed = boostedSpeed;
+    isSpeedBoosted = true;
+    speedBoostEndTime = clock->getElapsedTime().asSeconds() + duration;
 }
 
 

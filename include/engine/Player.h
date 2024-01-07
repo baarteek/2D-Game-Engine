@@ -32,6 +32,10 @@ private:
 	float lastFlashTime;       
 	sf::Color originalColor;
 	sf::Clock* clock;
+	bool isSpeedBoosted = false;
+	float speedBoostEndTime = 0;
+	float normalSpeed;
+	float boostedSpeed;
 
 	virtual void draw(RenderTarget& target, RenderStates states) const;
 
@@ -58,4 +62,5 @@ public:
 	bool canBeHit(Clock* clock);
 	void hit();
 	void setClock(Clock* clock);
+	void applySpeedBoost(float duration, float newSpeed);
 };

@@ -15,7 +15,7 @@
 #include "GameUI.h"
 #include "Coin.h"
 #include "Emerald.h"
-#include "HealthPotion.h"
+#include "Potion.h"
 
 using namespace sf;
 using namespace std;
@@ -31,7 +31,8 @@ private:
 	vector<Enemy*> enemies;
 	vector<Coin*> coins;
 	vector<Emerald*> emeralds;
-	vector<HealthPotion*> healthPotions;
+	vector<Potion*> healthPotions;
+	vector<Potion*> speedPotions;
 	Color backgroundColor;
 	View gameView;
 	View menuView;

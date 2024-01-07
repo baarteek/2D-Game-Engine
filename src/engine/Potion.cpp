@@ -1,44 +1,44 @@
-#include "HealthPotion.h"
+#include "Potion.h"
 
-HealthPotion::HealthPotion(sf::RenderWindow* window, sf::Vector2f position)
+Potion::Potion(sf::RenderWindow* window, sf::Vector2f position, std::string path)
 {
 	this->window = window;
 	this->position = position;
-	loadFrames();
+	loadFrames(path);
 	setPos(position);
 }
 
-void HealthPotion::update()
+void Potion::update()
 {
 	animate();
 }
 
-void HealthPotion::draw()
+void Potion::draw()
 {
 	if (!sprites.empty()) {
 		window->draw(sprites[0]);
 	}
 }
 
-void HealthPotion::setPos(sf::Vector2f position)
+void Potion::setPos(sf::Vector2f position)
 {
 	this->position = position;
 	sprites[0].setPosition(position);
 }
 
-void HealthPotion::scale(float scaleX, float scaleY)
+void Potion::scale(float scaleX, float scaleY)
 {
 	sprites[0].scale(scaleX, scaleY);
 }
 
-sf::Vector2f HealthPotion::getPosition()
+sf::Vector2f Potion::getPosition()
 {
 	return sprites[0].getPosition();
 }
 
-void HealthPotion::loadFrames()
+void Potion::loadFrames(std::string path)
 {
-	if (texture.loadFromFile("assets/objects/health_potions.png")) {
+	if (texture.loadFromFile(path)) {
 		sprites.emplace_back();
 		sprites[0].setTexture(texture);
 
@@ -47,7 +47,7 @@ void HealthPotion::loadFrames()
 		int spacing = 1;
 
 		int startFrame = 0;
-		int totalFrames = 3;
+		int totalFrames = 6;
 
 		for (int i = startFrame; i < startFrame + totalFrames; ++i) {
 			int x = (i % totalFrames) * (frameWidth + spacing);

@@ -89,7 +89,11 @@ void Engine::initPotions(vector<vector<int>> levelData)
 		for (int x = 0; x < levelData[y].size(); x++) {
 			if (levelData[y][x] == 162) {
 				sf::Vector2f healthPotionsPosition(x * 18, y * 18);
-				healthPotions.push_back(new HealthPotion(&window, healthPotionsPosition));
+				healthPotions.push_back(new Potion(&window, healthPotionsPosition, "assets/objects/health_potions.png"));
+			}
+			else if (levelData[y][x] == 163) {
+				sf::Vector2f speedPotionsPosition(x * 18, y * 18);
+				speedPotions.push_back(new Potion(&window, speedPotionsPosition, "assets/objects/speed_potions.png"));
 			}
 		}
 	}
@@ -215,7 +219,7 @@ void Engine::updateEmeralds()
 void Engine::updatePotions()
 {
 	for (auto it = healthPotions.begin(); it != healthPotions.end();) {
-		HealthPotion* healtpotion = *it;
+		Potion* healtpotion = *it;
 		healtpotion->update();
 		healtpotion->draw();
 
@@ -226,6 +230,21 @@ void Engine::updatePotions()
 			}
 			delete healtpotion;
 			it = healthPotions.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
+
+	for (auto it = speedPotions.begin(); it != speedPotions.end();) {
+		Potion* speedPotion = *it;
+		speedPotion->update();
+		speedPotion->draw();
+
+		if (checkCollision(player->getPosition(), speedPotion->getPosition(), 20)) {
+			player->applySpeedBoost(10, 200);
+			delete speedPotion;
+			it = speedPotions.erase(it);
 		}
 		else {
 			++it;
