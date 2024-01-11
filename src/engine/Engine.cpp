@@ -287,9 +287,10 @@ void Engine::updatePotions()
 
 void Engine::gameOver()
 {
-	if (player->getHealth() <= 0) {
+	if (player->getPosition().y > 2000)
+		player->setHealth(0);
+	if (player->getHealth() <= 0)
 		isGameOver = true;
-	}
 }
 
 void Engine::drawGameScene()
@@ -307,8 +308,7 @@ void Engine::restar()
 	levelData.clear();
 	initMap("assets/maps/first_map.txt");
 	initPlayer(map);
-	ui->setHealth(player->getHealth());
-	ui->setScores(0);
+	ui = new GameUI(&window, player->getHealth(), 0);
 }
 
 void Engine::clearLevel()
