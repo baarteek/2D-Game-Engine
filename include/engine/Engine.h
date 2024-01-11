@@ -28,6 +28,7 @@ private:
 	Clock globalClock;
 	Time deltaTime;
 	TileMap* map;
+	vector<vector<int>> levelData;
 	Player* player;
 	vector<Enemy*> enemies;
 	vector<Coin*> coins;
@@ -58,6 +59,7 @@ private:
 	void gameOver();
 	void drawGameScene();
 	void restar();
+	void clearLevel();
 
 public:
 	Engine(unsigned int width, unsigned int height, string title, int style);

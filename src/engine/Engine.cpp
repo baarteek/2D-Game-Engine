@@ -18,7 +18,6 @@ Engine::Engine(unsigned int width, unsigned int height, string title, int style)
 
 void Engine::initMap(string mapPath)
 {
-	vector<vector<int>> levelData;
 	if (FileReader::readMapFile(mapPath, levelData)) {
 		map = new TileMap();
 		map->load("assets/tilemap.png", sf::Vector2u(18, 18), levelData);
@@ -303,7 +302,46 @@ void Engine::drawGameScene()
 void Engine::restar()
 {
 	isGameOver = false;
-	player->setHealth(6);
+	globalClock.restart();
+	clearLevel();
+	levelData.clear();
+	initMap("assets/maps/first_map.txt");
+	initPlayer(map);
+	ui->setHealth(player->getHealth());
+	ui->setScores(0);
+}
+
+void Engine::clearLevel()
+{
+	for (auto& enemy : enemies) {
+		delete enemy;
+	}
+	enemies.clear();
+
+	for (auto& coin : coins) {
+		cout << "usuwam coina" << endl;
+		delete coin;
+	}
+	coins.clear();
+
+	for (auto& emerald : emeralds) {
+		delete emerald;
+	}
+	emeralds.clear();
+
+	for (auto& healthPotion : healthPotions) {
+		delete healthPotion;
+	}
+	healthPotions.clear();
+	for (auto& speedPotion : speedPotions) {
+		delete speedPotion;
+	}
+	speedPotions.clear();
+
+	for (auto& jumpPotion : jumpPotions) {
+		delete jumpPotion;
+	}
+	jumpPotions.clear();
 }
 
 void Engine::setFramesPerSecond(unsigned int fps)
