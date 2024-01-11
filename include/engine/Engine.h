@@ -16,6 +16,7 @@
 #include "Coin.h"
 #include "Emerald.h"
 #include "Potion.h"
+#include "GameOver.h"
 
 using namespace sf;
 using namespace std;
@@ -39,6 +40,8 @@ private:
 	View menuView;
 	Menu *menu;
 	GameUI* ui;
+	GameOver* gameOverUI;
+	bool isGameOver = false;
 
 	void handleEvent();
 	void renderScene();
@@ -52,6 +55,9 @@ private:
 	void updateCoins();
 	void updateEmeralds();
 	void updatePotions();
+	void gameOver();
+	void drawGameScene();
+	void restar();
 
 public:
 	Engine(unsigned int width, unsigned int height, string title, int style);

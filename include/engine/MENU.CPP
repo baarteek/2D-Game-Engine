@@ -106,6 +106,11 @@ void Menu::restartMenuItems()
     menuItems[0]->setScale(buttonScaleVector);
 }
 
+Sprite Menu::getBackground()
+{
+    return backgroundSprite;
+}
+
 void Menu::setSelectedItem(int itemID)
 {
     this->selectedItem = itemID;

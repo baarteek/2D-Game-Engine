@@ -13,6 +13,7 @@ Engine::Engine(unsigned int width, unsigned int height, string title, int style)
 	menu = new Menu(width, height, 40, "assets/menu/backgroundMenu.png");
 	menu->inMenuMode = false;
 	ui = new GameUI(&window, player->getHealth(), 0);
+	gameOverUI = new GameOver(&window, 0, globalClock, Vector2f(0,0));
 }
 
 void Engine::initMap(string mapPath)
@@ -130,6 +131,11 @@ void Engine::handleEvent()
 			if (menu->inMenuMode) {
 				menu->handleKeyPress(event.key.code);
 			}
+			if (isGameOver) {
+				if (Keyboard::isKeyPressed(Keyboard::Enter)) {
+					restar();
+				}
+			}
 			break;
 		}
 	}
@@ -140,8 +146,15 @@ void Engine::renderScene()
 	deltaTime = clock.restart();
 	window.clear(backgroundColor);
 
-
-	if (!menu->inMenuMode) {
+	if (isGameOver) {
+		drawGameScene();
+		window.draw(menu->getBackground());
+		gameOverUI->setScores(ui->getScores());
+		gameOverUI->setPosition(menuView.getCenter());
+		gameOverUI->update();
+		gameOverUI->draw();
+	}
+	else if (!isGameOver && !menu->inMenuMode) {
 		setBackgroundColor(47, 145, 250);
 		window.draw(*map);
 		ui->displayGameTime(globalClock);
@@ -157,13 +170,13 @@ void Engine::renderScene()
 		ui->draw();
 		ui->update(deltaTime.asSeconds(), player->getPosition());
 
+		gameOver();
+
 		gameView.setCenter(player->getPosition());
 		window.setView(gameView);
 	}
 	else {
-		window.setView(menuView);
-		window.draw(*map);
-		window.draw(*player);
+		drawGameScene();
 		window.draw(*menu);
 	}
 	
@@ -271,6 +284,26 @@ void Engine::updatePotions()
 			++it;
 		}
 	}
+}
+
+void Engine::gameOver()
+{
+	if (player->getHealth() <= 0) {
+		isGameOver = true;
+	}
+}
+
+void Engine::drawGameScene()
+{
+	window.setView(menuView);
+	window.draw(*map);
+	window.draw(*player);
+}
+
+void Engine::restar()
+{
+	isGameOver = false;
+	player->setHealth(6);
 }
 
 void Engine::setFramesPerSecond(unsigned int fps)

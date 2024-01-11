@@ -44,4 +44,5 @@ public:
 	void setSelectedItem(int itemID);
 	void setColors(Color regularColor, Color selectedItemColor);
 	void restartMenuItems();
+	Sprite getBackground();
 };
