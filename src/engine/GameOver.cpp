@@ -9,7 +9,7 @@ GameOver::GameOver(sf::RenderWindow* window, int scores, sf::Clock clock, sf::Ve
     }
 
     gameOverText.setFont(font);
-    gameOverText.setString("Game Over");
+    gameOverText.setString(isLevelCompleted ? "Level Completed!" : "Game Over");
     gameOverText.setCharacterSize(76);
     gameOverText.setFillColor(sf::Color::Red);
     gameOverText.setPosition(100, 100);
@@ -30,10 +30,9 @@ GameOver::GameOver(sf::RenderWindow* window, int scores, sf::Clock clock, sf::Ve
 
 void GameOver::update()
 {
+    setLevelText();
     displayGameTime();
     updateScores();
-    centerText(gameOverText, position.x, position.y - 150);
-    centerText(infoText, position.x, position.y + 200);
 }
 
 void GameOver::updateScores()
@@ -68,6 +67,15 @@ void GameOver::centerText(sf::Text& text, float x, float y)
     text.setPosition(x, y);
 }
 
+void GameOver::setLevelText()
+{
+    gameOverText.setString(isLevelCompleted ? "Level Completed!" : "Game Over");
+    gameOverText.setCharacterSize(isLevelCompleted ? 60 : 76);
+    gameOverText.setFillColor(isLevelCompleted ? sf::Color::Green : sf::Color::Red);
+    centerText(gameOverText, position.x, position.y - 150);
+    centerText(infoText, position.x, position.y + 200);
+}
+
 void GameOver::draw()
 {
     window->draw(gameOverText);
@@ -84,4 +92,19 @@ void GameOver::setScores(int scores)
 void GameOver::setPosition(sf::Vector2f position)
 {
     this->position = position;
+}
+
+void GameOver::setIsLevelCompleted(bool isLevelCompleted)
+{
+    this->isLevelCompleted = isLevelCompleted;
+}
+
+bool GameOver::getIsLevelCompleted()
+{
+    return isLevelCompleted;
+}
+
+void GameOver::setClock(sf::Clock clock)
+{
+    this->clock = clock;
 }

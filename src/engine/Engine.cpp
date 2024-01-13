@@ -22,7 +22,7 @@ void Engine::initMap(string mapPath)
 		map = new TileMap();
 		map->load("assets/tilemap.png", sf::Vector2u(18, 18), levelData);
 		map->setGravity(500);
-		vector<int> collisionTilesID = { 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24, 25, 26, 41, 42, 43, 44, 61, 62, 63, 64, 81, 82, 83, 84, 101, 102, 103, 104, 121, 122, 123, 124, 141, 142, 143, 144};
+		vector<int> collisionTilesID = { 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24, 25, 26, 27, 41, 42, 43, 44, 61, 62, 63, 64, 81, 82, 83, 84, 101, 102, 103, 104, 121, 122, 123, 124, 141, 142, 143, 144, 147, 148};
 		map->setCollisonTilesID(collisionTilesID);
 
 		initEnemy(levelData);
@@ -291,6 +291,10 @@ void Engine::gameOver()
 		player->setHealth(0);
 	if (player->getHealth() <= 0)
 		isGameOver = true;
+	if (checkCollision(player->getPosition(), map->getLevelCopletedPosition(), 20)) {
+		gameOverUI->setIsLevelCompleted(true);
+		isGameOver = true;
+	}
 }
 
 void Engine::drawGameScene()
@@ -304,6 +308,7 @@ void Engine::restar()
 {
 	isGameOver = false;
 	globalClock.restart();
+	gameOverUI->setClock(clock);
 	clearLevel();
 	levelData.clear();
 	initMap("assets/maps/first_map.txt");

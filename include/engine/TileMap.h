@@ -14,6 +14,7 @@ private:
     VertexArray m_vertices;
     Texture m_tileset;
     vector<vector<int>> tiles;
+    Vector2f levelCopledtedPosition;
     float gravity;
     
 
@@ -32,4 +33,5 @@ public:
     void setCollisonTilesID(vector<int> collisionTiles);
     int getCollisionTileID(int index);
     int getCollisionTilesCount() const;
+    Vector2f getLevelCopletedPosition();
 };

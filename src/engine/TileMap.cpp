@@ -49,6 +49,10 @@ bool TileMap::load(const string& tileset, sf::Vector2u tileSize, const vector<ve
             triangles[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
             triangles[4].texCoords = sf::Vector2f((tu + 1) * tileSize.x, tv * tileSize.y);
             triangles[5].texCoords = sf::Vector2f((tu + 1) * tileSize.x, (tv + 1) * tileSize.y);
+
+            if (tileNumber == 111 || tileNumber == 112 || tileNumber == 131) {
+                levelCopledtedPosition = sf::Vector2f(i * tileSize.x, j * tileSize.y);
+            }
         }
     }
 
@@ -112,6 +116,11 @@ int TileMap::getCollisionTileID(int index) {
 
 int TileMap::getCollisionTilesCount() const {
     return collisionTiles.size();
+}
+
+Vector2f TileMap::getLevelCopletedPosition()
+{
+    return levelCopledtedPosition;
 }
 
 

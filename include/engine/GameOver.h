@@ -17,10 +17,11 @@ private:
     float time = NULL;
     sf::Clock clock;
     sf::Vector2f position;
-
-    void updateScores();
+    bool isLevelCompleted = false;
+    void updateScores(); 
     void displayGameTime();
     void centerText(sf::Text& text, float x, float y);
+    void setLevelText();
 
 public:
     GameOver(sf::RenderWindow* window, int scores, sf::Clock clock, sf::Vector2f position);
@@ -28,4 +29,7 @@ public:
     void draw();
     void setScores(int scores);
     void setPosition(sf::Vector2f position);
+    void setIsLevelCompleted(bool isLevelCompleted);
+    bool getIsLevelCompleted();
+    void setClock(sf::Clock clock);
 };
